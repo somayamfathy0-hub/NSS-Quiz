@@ -244,7 +244,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="by-line">By: Somaya</div>
   <div class="title-underline"></div>
   <div class="features-grid">
-    <div class="feat-item"><span class="feat-icon">❓</span><div><div class="feat-val">42 Qs</div><div class="feat-lbl">Questions</div></div></div>
+    <div class="feat-item"><span class="feat-icon">❓</span><div><div class="feat-val">41 Qs</div><div class="feat-lbl">Questions</div></div></div>
     <div class="feat-item"><span class="feat-icon">❤️</span><div><div class="feat-val">10 Lives</div><div class="feat-lbl">Per game</div></div></div>
     <div class="feat-item"><span class="feat-icon">⏱️</span><div><div class="feat-val">22s / 32s</div><div class="feat-lbl">Normal / Boss</div></div></div>
     <div class="feat-item"><span class="feat-icon">⚡</span><div><div class="feat-val">×4 Combo</div><div class="feat-lbl">Streak bonus</div></div></div>
@@ -356,18 +356,17 @@ const NORMAL_Q=[
   {q:"Through which of the following foramina does cerebrospinal fluid (CSF) pass from the lateral ventricle into the third ventricle?",o:["Cerebral aqueduct","Foramen of Luschka","Foramen of Magendie","Foramen of Monro"],a:3,t:"mcq",s:"Anatomy"},
   {q:"Which of the following dural folds separates the occipital lobes of the cerebrum from the cerebellum and contains a notch for the passage of the midbrain?",o:["Falx cerebri","Falx cerebelli","Tentorium cerebelli","Diaphragma sellae"],a:2,t:"mcq",s:"Anatomy"},
   {q:"Which cranial nerve emerges from the pre-olivary fissure, located between the pyramid and the olive of the medulla?",o:["Glossopharyngeal (IX)","Vagus (X)","Accessory (XI)","Hypoglossal (XII)"],a:3,t:"mcq",s:"Anatomy"},
-  {q:"The 'Facial Colliculus' in the floor of the fourth ventricle is physically created by which developmental process?",o:["The decussation of the pyramids","The facial nerve looping around the abducens nucleus (Neurobiotaxis)","The expansion of the vestibular nuclei","The crossing of the medial lemniscus"],a:1,t:"mcq",s:"Anatomy"},
+  {q:"Which cranial nerve is responsible for the sensory innervation of the dura mater?",o:["Oculomotor nerve (III)","Trochlear nerve (IV)","Trigeminal nerve (V)","Abducent nerve (VI)"],a:2,t:"mcq",s:"Anatomy"},
   {q:"Which functional subdivision of the cerebellum is phylogenetically the oldest and responsible for maintaining balance and eye movements?",o:["Spinocerebellum (Paleocerebellum)","Cerebrocerebellum (Neocerebellum)","Vestibulocerebellum (Archicerebellum)","Vermis"],a:2,t:"mcq",s:"Anatomy"},
   {q:"In the midbrain, the cerebral peduncles are divided into an anterior part (crus cerebri) and a posterior part (tegmentum) by which structure?",o:["Tectum","Red nucleus","Substantia nigra","Cerebral aqueduct"],a:2,t:"mcq",s:"Anatomy"},
   {q:"Which part of the diencephalon acts as the primary relay station for all main sensory systems except for the olfactory pathway?",o:["Hypothalamus","Thalamus","Epithalamus","Subthalamus"],a:1,t:"mcq",s:"Anatomy"},
   {q:"Through which cranial exit does the Mandibular division (V3) of the Trigeminal nerve leave the skull?",o:["Foramen rotundum","Superior orbital fissure","Foramen ovale","Jugular foramen"],a:2,t:"mcq",s:"Anatomy"},
-  {q:"Which group of cranial nerves carries parasympathetic (General Visceral Efferent) fibers?",o:["I, II, III, and IV","III, VII, IX, and X","V, VII, X, and XII","VI, VIII, XI, and XII"],a:1,t:"mcq",s:"Anatomy"},
+  {q:"The diaphragma sellae forms a covering over which part of the skull?",o:["The foramen magnum","The hypophysial fossa","The internal occipital protuberance","The petrous part of the temporal bone"],a:1,t:"mcq",s:"Anatomy"},
   {q:"What structure forms the anterior boundary/wall of the third ventricle?",o:["Thalamus and Hypothalamus","Lamina terminalis and anterior commissure","Pineal body and posterior commissure","Ependyma and pia mater"],a:1,t:"mcq",s:"Anatomy"},
   {q:"Damage to the 'Arbor Vitae' — the tree-like white matter pattern — would occur in which part of the brain?",o:["Medulla oblongata","Cerebrum","Cerebellum","Midbrain"],a:2,t:"mcq",s:"Anatomy"},
   {q:"Which cranial nerve is unique for emerging from the posterior surface of the midbrain and possessing the longest intracranial course of all the cranial nerves?",o:["Oculomotor nerve (III)","Trochlear nerve (IV)","Abducent nerve (VI)","Glossopharyngeal nerve (IX)"],a:1,t:"mcq",s:"Anatomy"},
 
-  // ── PHYSIOLOGY (12 normal) ──
-  {q:"Which of the following is the correct anatomical origin for the sympathetic division of the ANS?",o:["Cranial nerves III, VII, IX, and X","Sacral spinal cord segments S2–S4","Spinal cord segments T1 to L2/L3","Brainstem and cervical spinal cord"],a:2,t:"mcq",s:"Physiology"},
+  // ── PHYSIOLOGY (11 normal) ──
   {q:"In the sympathetic nervous system, what is the characteristic length of the preganglionic and postganglionic fibers?",o:["Long preganglionic and short postganglionic","Short preganglionic and long postganglionic","Both fibers are of equal length","Fibers synapse directly on skeletal muscle without ganglia"],a:1,t:"mcq",s:"Physiology"},
   {q:"Which higher center is responsible for integrating ANS functions with water balance, temperature regulation, and hunger?",o:["Spinal cord","Pons","Hypothalamus","Midbrain"],a:2,t:"mcq",s:"Physiology"},
   {q:"What is the primary neurotransmitter released by all autonomic preganglionic neurons, both sympathetic and parasympathetic?",o:["Norepinephrine","Epinephrine","Acetylcholine (ACh)","Dopamine"],a:2,t:"mcq",s:"Physiology"},
@@ -400,7 +399,7 @@ const NORMAL_Q=[
   {q:"During the microscopic examination of brain tissue from a patient who died of Rabies, the presence of specific intracytoplasmic acidophilic bodies is noted, particularly in the hippocampus and cerebellum. These structures are known as:",o:["Rosenthal fibers","Corpora amylacia","Negri bodies","Owl's eye inclusions"],a:2,t:"mcq",s:"Pathology"},
 
   // ── HISTOLOGY (2) ──
-  {q:"In which specific segments of the spinal cord are the lateral horns, which contain sympathetic nuclei, found?",o:["All segments of the spinal cord","Cervical and Thoracic segments","Thoracic and upper two lumbar segments","Lumbar and Sacral segments"],a:2,t:"mcq",s:"Histology"},
+  {q:"The cerebellar cortex is organized into three distinct layers. Which of the following is the central layer?",o:["Outer molecular layer","Inner granule layer","Ganglionic layer","Multiform layer"],a:2,t:"mcq",s:"Histology"},
   {q:"Which layer of the cerebral cortex is identified as being the narrowest layer?",o:["Molecular layer (I)","External pyramidal layer (III)","Internal granular layer (IV)","Multiform layer (VI)"],a:2,t:"mcq",s:"Histology"},
 ];
 
@@ -427,7 +426,7 @@ function getAccRank(acc,total,correct){
 }
 
 /* ═══════════ STATE ═══════════ */
-const TOTAL_Q=42;
+const TOTAL_Q=41;
 const LIVES=10;
 let gs={};
 let timerInt=null;
@@ -474,7 +473,7 @@ function showToast(msg,ok=false){
   document.body.appendChild(t);setTimeout(()=>t.remove(),3000);
 }
 function handleLbClick(){
-  if(!hasPlayedEver){showToast('🏆 Complete a game first to unlock the leaderboard!');return;}
+  if(!hasPlayedEver){showToast('🏆 Complete the game first to unlock the leaderboard!');return;}
   showLeaderboard('home');
 }
 
@@ -504,17 +503,17 @@ function startGame(){
   // Actually: fixed positions with shuffled normals within each subject block
 
   const anat  = NORMAL_Q.slice(0,12).sort(()=>Math.random()-.5);
-  const physio = NORMAL_Q.slice(12,24).sort(()=>Math.random()-.5);
-  const pharma = NORMAL_Q.slice(24,33).sort(()=>Math.random()-.5);
-  const bio    = NORMAL_Q.slice(33,35).sort(()=>Math.random()-.5);
-  const path   = NORMAL_Q.slice(35,37).sort(()=>Math.random()-.5);
-  const histo  = NORMAL_Q.slice(37,39).sort(()=>Math.random()-.5);
+  const physio = NORMAL_Q.slice(12,23).sort(()=>Math.random()-.5);
+  const pharma = NORMAL_Q.slice(23,32).sort(()=>Math.random()-.5);
+  const bio    = NORMAL_Q.slice(32,34).sort(()=>Math.random()-.5);
+  const path   = NORMAL_Q.slice(34,36).sort(()=>Math.random()-.5);
+  const histo  = NORMAL_Q.slice(36,38).sort(()=>Math.random()-.5);
 
   const sequence=[];
-  // Anatomy block: 12 normals + boss at index 12
+  // Anatomy block: 12 normals + boss
   anat.forEach(q=>sequence.push({...q,boss:false}));
   sequence.push({...BOSS_Q[0],boss:true});
-  // Physiology block: 12 normals + boss at index 25
+  // Physiology block: 11 normals + boss
   physio.forEach(q=>sequence.push({...q,boss:false}));
   sequence.push({...BOSS_Q[1],boss:true});
   // Pharmacology block: 9 normals + boss
@@ -563,7 +562,7 @@ function loadQuestion(){
   const q=gs.questions[gs.current];
   const isBoss=q.boss===true;
   const skipBtn=document.getElementById('skipBtn');
-  if(skipBtn){skipBtn.disabled=(isBoss||q.wasSkipped||gs.skips<=0);}
+  if(skipBtn){skipBtn.disabled=(q.wasSkipped||gs.skips<=0);}
   if(isBoss){showBossAlert(()=>actuallyLoadQuestion(q,isBoss));}
   else{actuallyLoadQuestion(q,isBoss);}
 }
@@ -604,7 +603,7 @@ function actuallyLoadQuestion(q,isBoss){
     const btn=document.createElement('button');btn.className='opt';btn.textContent=opt;btn.onclick=()=>answer(i,isBoss);cont.appendChild(btn);
   });
   document.getElementById('skipCount').textContent=gs.skips;
-  document.getElementById('skipBtn').disabled=(gs.questions[gs.current]&&(gs.questions[gs.current].boss||gs.questions[gs.current].wasSkipped||gs.skips<=0));
+  document.getElementById('skipBtn').disabled=(gs.questions[gs.current]&&(gs.questions[gs.current].wasSkipped||gs.skips<=0));
   updateComboDisplay();startTimer(maxTime);
 }
 
@@ -670,7 +669,7 @@ function useLifeline(){
 
 /* ═══════════ UI ═══════════ */
 function skipQuestion(){
-  if(gs.skips<=0||gs.questions[gs.current].boss||gs.questions[gs.current].wasSkipped)return;
+  if(gs.skips<=0||gs.questions[gs.current].wasSkipped)return;
   clearInterval(timerInt);
   gs.skips--;
   document.getElementById('skipCount').textContent=gs.skips;
@@ -880,8 +879,7 @@ function buildShareCanvas(){
   ctx.font='68px serif';ctx.textAlign='center';ctx.fillText('🧠',W/2,110);
   ctx.font='bold 26px Syne,serif';
   const gTitle=ctx.createLinearGradient(W*.25,0,W*.75,0);gTitle.addColorStop(0,'#c084fc');gTitle.addColorStop(.5,'#a855f7');gTitle.addColorStop(1,'#ec4899');
-  ctx.fillStyle=gTitle;ctx.fillText('NSS Quiz',W/2,155);
-  ctx.font='italic 14px Georgia,serif';ctx.fillStyle='rgba(192,132,252,.6)';ctx.fillText('By: Somaya',W/2,178);
+  ctx.fillStyle=gTitle;ctx.fillText('NSS Quiz',W/2,162);
   const gs2=ctx.createLinearGradient(W*.2,0,W*.8,0);gs2.addColorStop(0,'#a855f7');gs2.addColorStop(1,'#ec4899');
   ctx.font='bold 72px Syne,serif';ctx.fillStyle=gs2;ctx.fillText(lastEntry.score,W/2,280);
   ctx.font='14px DM Sans,sans-serif';ctx.fillStyle='#6b5680';ctx.fillText('TOTAL SCORE',W/2,305);
@@ -902,6 +900,53 @@ function downloadShare(){
 }
 
 initParticles();
+
+/* ═══════════ ANTI-CHEAT: SAVE ON CLOSE ═══════════ */
+window.addEventListener('beforeunload', function(){
+  // Only trigger if a game is actively in progress (not gameOver, not on home screen)
+  if(!gs||!gs.name||gs._gameOver)return;
+  if(gs.current===0&&gs.score===0)return; // closed before answering any question — don't save
+
+  const elapsed=Math.round((Date.now()-(gs.startTime||Date.now()))/1000);
+  const now=new Date();
+  const dateDisplay=`${String(now.getDate()).padStart(2,'0')}/${String(now.getMonth()+1).padStart(2,'0')}/${now.getFullYear()}`;
+  const acc=gs.current>0?Math.round((gs.correct/gs.current)*100):0;
+  const timeDisplay=elapsed>=60?`${Math.floor(elapsed/60)}m ${elapsed%60}s`:`${elapsed}s`;
+
+  const entry={
+    sid:sessionId,
+    name:gs.name+' (quit)',
+    score:gs.score,
+    mark:gs.correct,
+    total:TOTAL_Q,
+    acc,
+    bestStreak:gs.bestStreak||0,
+    bossCorrect:gs.bossCorrect||0,
+    time:elapsed,
+    timeStr:timeDisplay,
+    date:dateDisplay,
+    ts:Date.now(),
+    quit:true
+  };
+
+  // Mark as played so they can't start again
+  if(!gs.isTester){
+    localStorage.setItem('nssPlayed','1');
+    localStorage.setItem('nssHasPlayed','1');
+  }
+
+  // Save locally (synchronous, works reliably on close)
+  _localSave(entry);
+
+  // Try Firebase — use sendBeacon for reliability on page close
+  if(window._fbReady&&window._scoresRef){
+    try{
+      const db=firebase.database();
+      db.ref('nss_scores').push(entry);
+    }catch(e){}
+  }
+});
+
 if(!CanvasRenderingContext2D.prototype.roundRect){
   CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
     this.beginPath();this.moveTo(x+r,y);this.lineTo(x+w-r,y);this.quadraticCurveTo(x+w,y,x+w,y+r);
