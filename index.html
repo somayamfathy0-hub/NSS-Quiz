@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NSS Quiz</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&family=Share+Tech+Mono&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 <style>
 :root{
   --purple:#a855f7;--purple-d:#7c3aed;--violet:#8b5cf6;--pink:#ec4899;--indigo:#6366f1;
@@ -37,7 +37,8 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .brain-svg{position:relative;z-index:2;animation:brainFloat 3.2s ease-in-out infinite;filter:drop-shadow(0 0 22px rgba(168,85,247,.75)) drop-shadow(0 0 8px rgba(236,72,153,.4))}
 @keyframes brainFloat{0%,100%{transform:translateY(0) rotate(-2deg) scale(1)}33%{transform:translateY(-10px) rotate(2deg) scale(1.04)}66%{transform:translateY(-5px) rotate(-1deg) scale(1.02)}}
 
-.subtitle-tag{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--violet);letter-spacing:4px;text-transform:uppercase;margin-bottom:4px;opacity:.8}
+.subtitle-tag{display:none}
+.by-line{font-family:'Dancing Script',cursive;font-size:1rem;font-weight:600;color:rgba(192,132,252,.7);margin-bottom:4px;letter-spacing:.5px}
 .title{font-family:'Syne',sans-serif;font-size:2.6rem;font-weight:800;background:linear-gradient(135deg,#c084fc,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px;letter-spacing:-1px}
 .title-underline{width:60px;height:3px;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:2px;margin:0 auto 14px}
 
@@ -239,13 +240,13 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
       <ellipse cx="36" cy="30" rx="7" ry="4" fill="rgba(255,255,255,.12)" transform="rotate(-20 36 30)"/>
     </svg>
   </div>
-  <div class="subtitle-tag">🧠 Nervous System Science</div>
   <div class="title">NSS Quiz</div>
+  <div class="by-line">By: Somaya</div>
   <div class="title-underline"></div>
   <div class="features-grid">
     <div class="feat-item"><span class="feat-icon">❓</span><div><div class="feat-val">42 Qs</div><div class="feat-lbl">Questions</div></div></div>
     <div class="feat-item"><span class="feat-icon">❤️</span><div><div class="feat-val">10 Lives</div><div class="feat-lbl">Per game</div></div></div>
-    <div class="feat-item"><span class="feat-icon">⏱️</span><div><div class="feat-val">20s / 26s</div><div class="feat-lbl">Normal / Boss</div></div></div>
+    <div class="feat-item"><span class="feat-icon">⏱️</span><div><div class="feat-val">22s / 32s</div><div class="feat-lbl">Normal / Boss</div></div></div>
     <div class="feat-item"><span class="feat-icon">⚡</span><div><div class="feat-val">×4 Combo</div><div class="feat-lbl">Streak bonus</div></div></div>
     <div class="feat-item"><span class="feat-icon">💀</span><div><div class="feat-val">Boss Qs</div><div class="feat-lbl">3 boss questions</div></div></div>
     <div class="feat-item"><span class="feat-icon">🏆</span><div><div class="feat-val">Ranks</div><div class="feat-lbl">Earn your title</div></div></div>
@@ -306,8 +307,6 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="end-mark" id="endMark"></div>
   <div class="end-stats" id="endStats"></div>
   <div style="width:100%;max-width:380px;display:flex;flex-direction:column;gap:10px">
-    <button class="btn btn-primary" onclick="startGame()">▶ Play Again</button>
-    <button class="btn btn-secondary" id="reviewBtn" onclick="showWrongReview()" style="display:none">📋 Review Wrong Answers</button>
     <button class="btn btn-cyan" onclick="goShare()">📸 Share Score</button>
     <button class="btn btn-secondary" onclick="showLeaderboard('end')">🏆 Leaderboard</button>
     <button class="btn btn-secondary" onclick="goHome()">← Home</button>
@@ -319,7 +318,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="lb-wrap">
     <div class="lb-header">
       <div>
-        <div class="lb-title-text">🏆 Global Leaderboard</div>
+        <div class="lb-title-text">🏆 NSS Quiz Leaderboard</div>
         <div class="lb-sub" id="lbSub">Loading scores from all players...</div>
       </div>
       <button class="btn btn-secondary" style="width:auto;padding:8px 18px;margin-top:0" onclick="backFromLb()">← Back</button>
@@ -572,13 +571,13 @@ function loadQuestion(){
 function showBossAlert(cb){
   playSound('boss_music');
   const ov=document.createElement('div');ov.className='boss-overlay';
-  ov.innerHTML=`<div class="boss-skull">💀</div><div class="boss-title">BOSS QUESTION</div><div class="boss-sub">+250 pts · 26 seconds · No mercy</div>`;
+  ov.innerHTML=`<div class="boss-skull">💀</div><div class="boss-title">BOSS QUESTION</div><div class="boss-sub">+250 pts · 32 seconds · No mercy</div>`;
   document.getElementById('gameScreen').appendChild(ov);
   setTimeout(()=>{ov.remove();cb();},2200);
 }
 
 function actuallyLoadQuestion(q,isBoss){
-  const maxTime=isBoss?26:20;
+  const maxTime=isBoss?32:22;
   gs.maxTime=maxTime;
   gs.timeLeft=maxTime;
   document.getElementById('qLabel').textContent=`Q ${gs.current+1} of ${gs.questions.length}`;
@@ -771,8 +770,6 @@ function endGame(){
   `;
   showScreen('endScreen');
   triggerEndEffect(ar.effect);
-  const rb=document.getElementById('reviewBtn');
-  if(rb)rb.style.display=gs.wrongAnswers.length>0?'block':'none';
 }
 
 /* ═══════════ LEADERBOARD ═══════════ */
@@ -884,7 +881,7 @@ function buildShareCanvas(){
   ctx.font='bold 26px Syne,serif';
   const gTitle=ctx.createLinearGradient(W*.25,0,W*.75,0);gTitle.addColorStop(0,'#c084fc');gTitle.addColorStop(.5,'#a855f7');gTitle.addColorStop(1,'#ec4899');
   ctx.fillStyle=gTitle;ctx.fillText('NSS Quiz',W/2,155);
-  ctx.font='11px Share Tech Mono,monospace';ctx.fillStyle='#6b5680';ctx.fillText('NERVOUS SYSTEM SCIENCE',W/2,175);
+  ctx.font='italic 14px Georgia,serif';ctx.fillStyle='rgba(192,132,252,.6)';ctx.fillText('By: Somaya',W/2,178);
   const gs2=ctx.createLinearGradient(W*.2,0,W*.8,0);gs2.addColorStop(0,'#a855f7');gs2.addColorStop(1,'#ec4899');
   ctx.font='bold 72px Syne,serif';ctx.fillStyle=gs2;ctx.fillText(lastEntry.score,W/2,280);
   ctx.font='14px DM Sans,sans-serif';ctx.fillStyle='#6b5680';ctx.fillText('TOTAL SCORE',W/2,305);
@@ -903,32 +900,6 @@ function buildShareCanvas(){
 function downloadShare(){
   const a=document.createElement('a');a.download='nss-quiz-score.png';a.href=document.getElementById('shareCanvas').toDataURL('image/png');a.click();
 }
-
-/* ═══════════ WRONG REVIEW ═══════════ */
-function showWrongReview(){
-  const ov=document.getElementById('reviewOverlay');
-  const cont=document.getElementById('reviewContent');
-  if(!gs.wrongAnswers||gs.wrongAnswers.length===0){cont.innerHTML='<div style="text-align:center;color:var(--muted2);padding:40px;font-family:Share Tech Mono,monospace">No wrong answers — perfect score! 🏆</div>';ov.style.display='block';return;}
-  let html='';
-  gs.wrongAnswers.forEach((w,i)=>{
-    html+=`<div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:16px;margin-bottom:14px">
-      <div style="font-size:.65rem;color:var(--muted2);font-family:'Share Tech Mono',monospace;margin-bottom:6px">Q${i+1} · ${w.s||''} ${w.chosen===-1?'<span style=color:#f59e0b>⏰ Time ran out</span>':''}</div>
-      <div style="font-size:.92rem;color:#f3e8ff;margin-bottom:12px;padding-left:10px;border-left:2px solid rgba(239,68,68,.4);line-height:1.6">${esc(w.q)}</div>
-      <div style="display:flex;flex-direction:column;gap:6px">`;
-    w.options.forEach((opt,j)=>{
-      const isCorrect=j===w.correct;
-      const isChosen=j===w.chosen;
-      let bg='rgba(255,255,255,.03)';let border='rgba(255,255,255,.08)';let color='#94a3b8';let prefix='▸';
-      if(isCorrect){bg='rgba(168,85,247,.12)';border='rgba(168,85,247,.4)';color='#d8b4fe';prefix='✓';}
-      else if(isChosen){bg='rgba(239,68,68,.1)';border='rgba(239,68,68,.35)';color='#fca5a5';prefix='✗';}
-      html+=`<div style="padding:8px 12px;border-radius:6px;border:1px solid ${border};background:${bg};color:${color};font-size:.84rem;display:flex;gap:8px;align-items:center"><span>${prefix}</span><span>${esc(opt)}</span></div>`;
-    });
-    html+='</div></div>';
-  });
-  cont.innerHTML=html;
-  ov.style.display='block';
-}
-function closeWrongReview(){document.getElementById('reviewOverlay').style.display='none';}
 
 initParticles();
 if(!CanvasRenderingContext2D.prototype.roundRect){
@@ -965,14 +936,5 @@ if(!CanvasRenderingContext2D.prototype.roundRect){
 })();
 </script>
 
-<div id="reviewOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:800;overflow-y:auto;padding:24px 16px">
-  <div style="max-width:680px;margin:0 auto">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
-      <div style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:#f3e8ff">📋 Wrong Answers Review</div>
-      <button onclick="closeWrongReview()" style="padding:8px 16px;border-radius:6px;border:1px solid rgba(168,85,247,.3);background:rgba(168,85,247,.08);color:var(--purple);font-family:'Share Tech Mono',monospace;font-size:.78rem;cursor:pointer">✕ Close</button>
-    </div>
-    <div id="reviewContent"></div>
-  </div>
-</div>
 </body>
 </html>
