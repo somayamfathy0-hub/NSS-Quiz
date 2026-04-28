@@ -3,69 +3,78 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CNS Pharmacology Quiz</title>
+<title>NSS Quiz</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 :root{
-  --green:#10b981;--green-d:#059669;--lime:#84cc16;--amber:#f59e0b;--emerald:#34d399;--red:#ef4444;--teal:#14b8a6;
-  --bg:#040d09;--card:rgba(16,185,129,0.05);--border:rgba(16,185,129,0.15);
-  --text:#d1fae5;--muted:#4b7a62;--muted2:#86b89a;
+  --purple:#a855f7;--purple-d:#7c3aed;--violet:#8b5cf6;--pink:#ec4899;--indigo:#6366f1;
+  --cyan:#06b6d4;--amber:#f59e0b;--red:#ef4444;--teal:#14b8a6;
+  --bg:#06030f;--card:rgba(168,85,247,0.05);--border:rgba(168,85,247,0.15);
+  --text:#f3e8ff;--muted:#6b5680;--muted2:#9d7fc0;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
 canvas#particles{position:fixed;inset:0;pointer-events:none;z-index:0}
 body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-image:linear-gradient(to right,rgba(16,185,129,.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(16,185,129,.04) 1px,transparent 1px);
+  background-image:linear-gradient(to right,rgba(168,85,247,.03) 1px,transparent 1px),linear-gradient(to bottom,rgba(168,85,247,.03) 1px,transparent 1px);
   background-size:40px 40px}
 
 .screen{position:relative;z-index:1;display:none;min-height:100vh;padding:20px;align-items:center;justify-content:center;flex-direction:column}
 .screen.active{display:flex}
-#homeScreen{background:radial-gradient(ellipse 70% 55% at 50% 0%,#061a0f 0%,var(--bg) 70%)}
-#endScreen{background:radial-gradient(ellipse 70% 55% at 50% 10%,#061a0f 0%,var(--bg) 70%)}
+#homeScreen{background:radial-gradient(ellipse 70% 55% at 50% 0%,#130a2a 0%,var(--bg) 70%)}
+#endScreen{background:radial-gradient(ellipse 70% 55% at 50% 10%,#130a2a 0%,var(--bg) 70%)}
 #leaderboardScreen,#shareScreen{background:var(--bg);justify-content:flex-start;padding-top:28px;overflow-y:auto}
 
-.logo-wrap{position:relative;width:110px;height:110px;display:flex;align-items:center;justify-content:center;margin-bottom:4px}
-.logo-hex{position:absolute;inset:0;animation:hexSpin 8s linear infinite;opacity:.4}
-.logo-icon{font-size:52px;position:relative;z-index:2;animation:iconPulse 2.4s ease-in-out infinite;filter:drop-shadow(0 0 18px rgba(16,185,129,.7))}
-@keyframes hexSpin{to{transform:rotate(360deg)}}
-@keyframes iconPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+/* ── FLOATING BRAIN ── */
+.brain-wrap{position:relative;width:130px;height:130px;display:flex;align-items:center;justify-content:center;margin-bottom:6px}
+.brain-ring{position:absolute;border-radius:50%;border:1.5px dashed;animation:ringPulse 3s ease-in-out infinite}
+.brain-ring:nth-child(1){inset:-10px;border-color:rgba(168,85,247,.35);animation-delay:0s}
+.brain-ring:nth-child(2){inset:-22px;border-color:rgba(139,92,246,.2);animation-delay:.6s}
+.brain-ring:nth-child(3){inset:-36px;border-color:rgba(99,102,241,.12);animation-delay:1.2s}
+@keyframes ringPulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.06);opacity:.4}}
+.brain-glow{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,rgba(168,85,247,.25) 0%,transparent 70%);animation:glowPulse 2.5s ease-in-out infinite}
+@keyframes glowPulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
+.brain-svg{position:relative;z-index:2;animation:brainFloat 3.2s ease-in-out infinite;filter:drop-shadow(0 0 22px rgba(168,85,247,.75)) drop-shadow(0 0 8px rgba(236,72,153,.4))}
+@keyframes brainFloat{0%,100%{transform:translateY(0) rotate(-2deg) scale(1)}33%{transform:translateY(-10px) rotate(2deg) scale(1.04)}66%{transform:translateY(-5px) rotate(-1deg) scale(1.02)}}
 
-.subtitle-tag{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--teal);letter-spacing:4px;text-transform:uppercase;margin-bottom:4px;opacity:.8}
-.title{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;background:linear-gradient(135deg,#34d399,#10b981,#84cc16);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px;letter-spacing:-1px}
-.title-underline{width:60px;height:3px;background:linear-gradient(90deg,var(--teal),var(--lime));border-radius:2px;margin:0 auto 14px}
+.subtitle-tag{font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--violet);letter-spacing:4px;text-transform:uppercase;margin-bottom:4px;opacity:.8}
+.title{font-family:'Syne',sans-serif;font-size:2.6rem;font-weight:800;background:linear-gradient(135deg,#c084fc,#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-align:center;margin-bottom:4px;letter-spacing:-1px}
+.title-underline{width:60px;height:3px;background:linear-gradient(90deg,var(--purple),var(--pink));border-radius:2px;margin:0 auto 14px}
 
 .features-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:420px;margin:0 0 14px}
-.feat-item{background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.16);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;position:relative;overflow:hidden}
-.feat-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--green),var(--teal));border-radius:3px 0 0 3px}
+.feat-item{background:rgba(168,85,247,.05);border:1px solid rgba(168,85,247,.16);border-radius:10px;padding:10px 14px;display:flex;align-items:center;gap:10px;position:relative;overflow:hidden}
+.feat-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--purple),var(--pink));border-radius:3px 0 0 3px}
 .feat-icon{font-size:20px;min-width:26px;text-align:center}
 .feat-val{font-size:.92rem;font-weight:700;color:#fff;font-family:'Share Tech Mono',monospace}
 .feat-lbl{font-size:.6rem;color:var(--muted2);text-transform:uppercase;letter-spacing:.8px}
 
-.home-card{background:rgba(4,20,11,.85);border:1px solid rgba(16,185,129,.22);border-radius:14px;padding:22px;width:100%;max-width:420px;backdrop-filter:blur(16px);box-shadow:0 0 40px rgba(16,185,129,.05)}
-.card-header-bar{display:flex;align-items:center;gap:7px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(16,185,129,.1)}
+.home-card{background:rgba(6,3,15,.85);border:1px solid rgba(168,85,247,.22);border-radius:14px;padding:22px;width:100%;max-width:420px;backdrop-filter:blur(16px);box-shadow:0 0 40px rgba(168,85,247,.06)}
+.card-header-bar{display:flex;align-items:center;gap:7px;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid rgba(168,85,247,.1)}
 .card-dot{width:8px;height:8px;border-radius:50%}
-.cd1{background:var(--red)}.cd2{background:var(--amber)}.cd3{background:var(--green)}
+.cd1{background:var(--red)}.cd2{background:var(--amber)}.cd3{background:var(--purple)}
 .card-label{font-family:'Share Tech Mono',monospace;font-size:.65rem;color:var(--muted);margin-left:auto;letter-spacing:1px}
 .name-label{font-size:.75rem;color:var(--muted2);margin-bottom:8px;font-family:'Share Tech Mono',monospace;letter-spacing:.5px}
 .name-label span{color:var(--red);font-size:.65rem}
 .name-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;margin-bottom:4px}
-.name-input{width:100%;padding:11px 12px;border-radius:7px;border:1px solid rgba(16,185,129,.28);background:rgba(16,185,129,.04);color:#d1fae5;font-size:.88rem;font-family:'Share Tech Mono',monospace;outline:none;transition:all .25s;min-width:0}
-.name-input:focus{border-color:var(--green);background:rgba(16,185,129,.08);box-shadow:0 0 0 3px rgba(16,185,129,.09)}
-.name-input::placeholder{color:#2a4a35}
+.name-input{width:100%;padding:11px 12px;border-radius:7px;border:1px solid rgba(168,85,247,.28);background:rgba(168,85,247,.04);color:#f3e8ff;font-size:.88rem;font-family:'Share Tech Mono',monospace;outline:none;transition:all .25s;min-width:0}
+.name-input:focus{border-color:var(--purple);background:rgba(168,85,247,.08);box-shadow:0 0 0 3px rgba(168,85,247,.09)}
+.name-input::placeholder{color:#2a1a3a}
 .name-hint{font-size:.7rem;min-height:16px;margin-bottom:6px;color:#ef4444;font-family:'Share Tech Mono',monospace}
 
 .btn{padding:12px 22px;border-radius:7px;border:none;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;width:100%;margin-top:10px;font-family:'DM Sans',sans-serif;letter-spacing:.3px}
-.btn-primary{background:linear-gradient(135deg,var(--green),var(--green-d));color:#fff;position:relative;overflow:hidden}
+.btn-primary{background:linear-gradient(135deg,var(--purple),var(--purple-d));color:#fff;position:relative;overflow:hidden}
 .btn-primary::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform .4s}
 .btn-primary:hover::after{transform:translateX(100%)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(16,185,129,.38)}
-.btn-secondary{background:rgba(16,185,129,.05);color:var(--muted2);border:1px solid rgba(16,185,129,.18)}
-.btn-secondary:hover{background:rgba(16,185,129,.1);color:var(--emerald)}
-.btn-cyan{background:linear-gradient(135deg,#0f766e,#14b8a6);color:#fff}
-.btn-cyan:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(20,184,166,.32)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(168,85,247,.38)}
+.btn-secondary{background:rgba(168,85,247,.05);color:var(--muted2);border:1px solid rgba(168,85,247,.18)}
+.btn-secondary:hover{background:rgba(168,85,247,.1);color:#c084fc}
+.btn-cyan{background:linear-gradient(135deg,#0e7490,#06b6d4);color:#fff}
+.btn-amber{background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff}
+.btn-amber:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(245,158,11,.35)}
+.btn-cyan:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(6,182,212,.32)}
 
-.toast{position:fixed;top:18px;left:50%;transform:translateX(-50%);background:#041408;border:1px solid rgba(239,68,68,.4);color:#fca5a5;padding:10px 22px;border-radius:7px;font-size:.82rem;font-weight:600;font-family:'Share Tech Mono',monospace;z-index:3000;animation:toastSlide .3s ease;pointer-events:none;white-space:nowrap;max-width:90vw;text-align:center}
-.toast.ok{border-color:rgba(16,185,129,.5);color:#6ee7b7}
+.toast{position:fixed;top:18px;left:50%;transform:translateX(-50%);background:#0d0318;border:1px solid rgba(239,68,68,.4);color:#fca5a5;padding:10px 22px;border-radius:7px;font-size:.82rem;font-weight:600;font-family:'Share Tech Mono',monospace;z-index:3000;animation:toastSlide .3s ease;pointer-events:none;white-space:nowrap;max-width:90vw;text-align:center}
+.toast.ok{border-color:rgba(168,85,247,.5);color:#d8b4fe}
 @keyframes toastSlide{from{opacity:0;transform:translateX(-50%) translateY(-12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 
 .boss-overlay{position:fixed;inset:0;background:rgba(0,0,0,.95);z-index:600;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:12px}
@@ -76,59 +85,63 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .boss-line{width:160px;height:1px;background:linear-gradient(90deg,transparent,#ef4444,transparent);margin:2px auto}
 
 .countdown-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:550;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:10px}
-.countdown-num{font-family:'Share Tech Mono',monospace;font-size:9rem;color:var(--green);text-shadow:0 0 40px rgba(16,185,129,.55);animation:countPop .9s ease-out}
+.countdown-num{font-family:'Share Tech Mono',monospace;font-size:9rem;color:var(--purple);text-shadow:0 0 40px rgba(168,85,247,.55);animation:countPop .9s ease-out}
 @keyframes countPop{0%{transform:scale(2);opacity:0}60%{transform:scale(.9);opacity:1}100%{transform:scale(1)}}
 .countdown-label{font-family:'Share Tech Mono',monospace;font-size:.8rem;color:var(--muted2);letter-spacing:4px;text-transform:uppercase}
 
 #gameScreen{justify-content:flex-start;padding-top:14px}
 .stats-bar{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:9px;width:100%;max-width:740px}
-.stat-box{background:rgba(16,185,129,.05);border:1px solid rgba(16,185,129,.14);border-radius:7px;padding:6px 12px;text-align:center;min-width:68px}
+.stat-box{background:rgba(168,85,247,.05);border:1px solid rgba(168,85,247,.14);border-radius:7px;padding:6px 12px;text-align:center;min-width:68px}
 .stat-label{font-size:.56rem;color:var(--muted2);text-transform:uppercase;letter-spacing:1px;font-family:'Share Tech Mono',monospace}
-.stat-val{font-size:1.05rem;font-weight:400;color:#d1fae5;font-family:'Share Tech Mono',monospace}
+.stat-val{font-size:1.05rem;font-weight:400;color:#f3e8ff;font-family:'Share Tech Mono',monospace}
 .stat-box.boss-stat{border-color:rgba(239,68,68,.45);background:rgba(239,68,68,.06)}
 .stat-box.boss-stat .stat-val{color:#fca5a5}
 
-#timerBar{width:100%;max-width:740px;height:4px;background:rgba(16,185,129,.08);border-radius:2px;margin-bottom:11px;overflow:hidden}
-#timerFill{height:100%;border-radius:2px;transition:width .1s linear;background:linear-gradient(90deg,var(--green),var(--lime),var(--amber),var(--red))}
+#timerBar{width:100%;max-width:740px;height:4px;background:rgba(168,85,247,.08);border-radius:2px;margin-bottom:11px;overflow:hidden}
+#timerFill{height:100%;border-radius:2px;transition:width .1s linear;background:linear-gradient(90deg,var(--purple),var(--pink),var(--amber),var(--red))}
 #timerFill.warning{animation:timerWarn .45s ease-in-out infinite}
 @keyframes timerWarn{0%,100%{opacity:1}50%{opacity:.3}}
 #timerFill.boss-timer{background:linear-gradient(90deg,#f59e0b,#ef4444,#dc2626)}
 
-.question-card{background:rgba(4,16,10,.92);border:1px solid rgba(16,185,129,.18);border-radius:12px;padding:22px 24px;width:100%;max-width:740px;backdrop-filter:blur(12px);transition:all .3s;position:relative;overflow:hidden}
-.question-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--green),var(--teal),var(--lime))}
+.question-card{background:rgba(6,3,15,.92);border:1px solid rgba(168,85,247,.18);border-radius:12px;padding:22px 24px;width:100%;max-width:740px;backdrop-filter:blur(12px);transition:all .3s;position:relative;overflow:hidden}
+.question-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--purple),var(--pink),var(--indigo))}
 .question-card.boss-card{border-color:rgba(239,68,68,.38);box-shadow:0 0 28px rgba(239,68,68,.07)}
 .question-card.boss-card::before{background:linear-gradient(90deg,#ef4444,#f59e0b,#ef4444)}
 
 .q-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px}
-.q-num-tag{font-size:.65rem;color:var(--muted2);background:rgba(16,185,129,.07);padding:3px 10px;border-radius:4px;font-family:'Share Tech Mono',monospace;border:1px solid rgba(16,185,129,.13)}
+.q-num-tag{font-size:.65rem;color:var(--muted2);background:rgba(168,85,247,.07);padding:3px 10px;border-radius:4px;font-family:'Share Tech Mono',monospace;border:1px solid rgba(168,85,247,.13)}
 .badges{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 .q-type-tag{font-size:.64rem;font-weight:700;padding:3px 10px;border-radius:4px;font-family:'Share Tech Mono',monospace}
-.q-type-mcq{background:rgba(16,185,129,.1);color:var(--green);border:1px solid rgba(16,185,129,.18)}
-.q-type-tf{background:rgba(245,158,11,.1);color:var(--amber);border:1px solid rgba(245,158,11,.18)}
+.q-type-mcq{background:rgba(168,85,247,.1);color:var(--purple);border:1px solid rgba(168,85,247,.18)}
+.q-subject-tag{font-size:.62rem;font-weight:700;padding:3px 10px;border-radius:4px;background:rgba(6,182,212,.1);color:#67e8f9;border:1px solid rgba(6,182,212,.2);font-family:'Share Tech Mono',monospace}
 .boss-badge{font-size:.64rem;font-weight:700;padding:3px 10px;border-radius:4px;background:rgba(239,68,68,.12);color:#fca5a5;border:1px solid rgba(239,68,68,.32);font-family:'Share Tech Mono',monospace;animation:bossBadgePulse 1.2s ease-in-out infinite}
 @keyframes bossBadgePulse{0%,100%{box-shadow:0 0 0 rgba(239,68,68,0)}50%{box-shadow:0 0 8px rgba(239,68,68,.45)}}
 
-.q-text{font-size:1rem;font-weight:500;color:#d1fae5;margin-bottom:18px;line-height:1.75;padding-left:12px;border-left:2px solid rgba(16,185,129,.28)}
+.q-text{font-size:1rem;font-weight:500;color:#f3e8ff;margin-bottom:18px;line-height:1.75;padding-left:12px;border-left:2px solid rgba(168,85,247,.28)}
 
 .options{display:flex;flex-direction:column;gap:8px}
-.opt{padding:11px 16px;border-radius:7px;border:1px solid rgba(16,185,129,.13);background:rgba(16,185,129,.03);color:#a7f3d0;font-size:.88rem;cursor:pointer;transition:all .18s;text-align:left;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:10px}
-.opt::before{content:'▸';color:rgba(16,185,129,.28);font-size:.78rem;transition:all .18s;flex-shrink:0}
-.opt:hover:not(.disabled){background:rgba(16,185,129,.09);border-color:rgba(16,185,129,.38);color:#fff;padding-left:20px}
-.opt:hover:not(.disabled)::before{color:var(--green)}
-.opt.correct{background:rgba(16,185,129,.13);border-color:var(--green);color:#6ee7b7}
-.opt.correct::before{content:'✓';color:var(--green)}
+.opt{padding:11px 16px;border-radius:7px;border:1px solid rgba(168,85,247,.13);background:rgba(168,85,247,.03);color:#e9d5ff;font-size:.88rem;cursor:pointer;transition:all .18s;text-align:left;font-family:'DM Sans',sans-serif;display:flex;align-items:center;gap:10px}
+.opt::before{content:'▸';color:rgba(168,85,247,.28);font-size:.78rem;transition:all .18s;flex-shrink:0}
+.opt:hover:not(.disabled){background:rgba(168,85,247,.09);border-color:rgba(168,85,247,.38);color:#fff;padding-left:20px}
+.opt:hover:not(.disabled)::before{color:var(--purple)}
+.opt.correct{background:rgba(168,85,247,.13);border-color:var(--purple);color:#d8b4fe}
+.opt.correct::before{content:'✓';color:var(--purple)}
 .opt.wrong{background:rgba(239,68,68,.1);border-color:var(--red);color:#fca5a5}
 .opt.wrong::before{content:'✗';color:var(--red)}
 .opt.disabled{cursor:not-allowed}
 
 .bottom-row{display:flex;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap;gap:8px}
-.lifeline-btn{padding:7px 14px;border-radius:5px;border:1px solid rgba(16,185,129,.28);background:rgba(16,185,129,.05);color:var(--green);font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Share Tech Mono',monospace}
-.lifeline-btn:hover:not(:disabled){background:rgba(16,185,129,.12)}
+.lifeline-btn{padding:7px 14px;border-radius:5px;border:1px solid rgba(168,85,247,.28);background:rgba(168,85,247,.05);color:var(--purple);font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Share Tech Mono',monospace}
+.skip-btn{padding:7px 14px;border-radius:5px;border:1px solid rgba(245,158,11,.28);background:rgba(245,158,11,.05);color:var(--amber);font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;font-family:'Share Tech Mono',monospace}
+.skip-btn:hover:not(:disabled){background:rgba(245,158,11,.14)}
+.skip-btn:disabled{opacity:.2;cursor:not-allowed}
+.skipped-badge{font-size:.62rem;font-weight:700;padding:2px 8px;border-radius:4px;background:rgba(245,158,11,.15);color:var(--amber);border:1px solid rgba(245,158,11,.25);font-family:'Share Tech Mono',monospace;margin-left:6px}
+.lifeline-btn:hover:not(:disabled){background:rgba(168,85,247,.12)}
 .lifeline-btn:disabled{opacity:.2;cursor:not-allowed}
 .combo-display{font-size:.72rem;font-weight:700;padding:5px 12px;border-radius:5px;font-family:'Share Tech Mono',monospace}
-.cx1{color:var(--muted2)}.cx2{background:rgba(16,185,129,.1);color:#6ee7b7}.cx3{background:rgba(245,158,11,.1);color:#fcd34d}
-.cx4{background:rgba(132,204,22,.12);color:#bef264;animation:comboPulse 1.1s ease-in-out infinite}
-@keyframes comboPulse{0%,100%{box-shadow:0 0 0 rgba(132,204,22,0)}50%{box-shadow:0 0 10px rgba(132,204,22,.4)}}
+.cx1{color:var(--muted2)}.cx2{background:rgba(168,85,247,.1);color:#c084fc}.cx3{background:rgba(245,158,11,.1);color:#fcd34d}
+.cx4{background:rgba(236,72,153,.12);color:#f9a8d4;animation:comboPulse 1.1s ease-in-out infinite}
+@keyframes comboPulse{0%,100%{box-shadow:0 0 0 rgba(236,72,153,0)}50%{box-shadow:0 0 10px rgba(236,72,153,.4)}}
 
 .lives-display{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:6px;align-items:center}
 .heart{font-size:22px;transition:all .3s}
@@ -148,30 +161,33 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 .end-trophyrow{font-size:3rem;margin-bottom:6px}
 .rank-title-display{font-family:'Syne',sans-serif;font-size:1.8rem;font-weight:800;text-align:center;margin:6px 0 2px}
 .rank-subtitle{font-size:.78rem;color:var(--muted2);margin-bottom:8px;text-align:center;font-family:'Share Tech Mono',monospace}
-.end-score-big{font-family:'Share Tech Mono',monospace;font-size:3.8rem;color:var(--green);text-shadow:0 0 28px rgba(16,185,129,.38)}
+.end-score-big{font-family:'Share Tech Mono',monospace;font-size:3.8rem;color:var(--purple);text-shadow:0 0 28px rgba(168,85,247,.38)}
 .end-mark{color:var(--muted2);font-size:.76rem;margin-bottom:16px;text-align:center;font-family:'Share Tech Mono',monospace;letter-spacing:.4px}
 .end-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:380px;margin-bottom:20px}
 
 .lb-wrap{width:100%;max-width:820px}
 .lb-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
-.lb-title-text{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#d1fae5}
+.lb-title-text{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:#f3e8ff}
 .lb-sub{font-size:.66rem;color:var(--muted2);margin-top:2px;font-family:'Share Tech Mono',monospace}
 .lb-table{width:100%;border-collapse:collapse;font-size:.78rem}
-.lb-table th{color:var(--muted);font-size:.6rem;text-transform:uppercase;letter-spacing:1px;padding:7px 10px;text-align:left;border-bottom:1px solid rgba(16,185,129,.1);font-family:'Share Tech Mono',monospace}
-.lb-table td{padding:9px 10px;border-bottom:1px solid rgba(16,185,129,.06);font-family:'Share Tech Mono',monospace;font-size:.76rem}
-.lb-table tr.me td{background:rgba(16,185,129,.07);color:#6ee7b7}
+.lb-table th{color:var(--muted);font-size:.6rem;text-transform:uppercase;letter-spacing:1px;padding:7px 10px;text-align:left;border-bottom:1px solid rgba(168,85,247,.1);font-family:'Share Tech Mono',monospace}
+.lb-table td{padding:9px 10px;border-bottom:1px solid rgba(168,85,247,.06);font-family:'Share Tech Mono',monospace;font-size:.76rem}
+.lb-table tr.me td{background:rgba(168,85,247,.07);color:#c084fc}
 .rank-badge{width:26px;height:26px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;background:rgba(255,255,255,.06)}
-.rank-1{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff}
-.rank-2{background:linear-gradient(135deg,#94a3b8,#64748b);color:#fff}
-.rank-3{background:linear-gradient(135deg,#cd7c3c,#a0522d);color:#fff}
-.rank-chip{font-size:.63rem;font-weight:700;padding:2px 7px;border-radius:4px;background:rgba(16,185,129,.1);color:#34d399;font-family:'Share Tech Mono',monospace}
+.rank-1{background:linear-gradient(135deg,#f59e0b,#b45309);color:#fff;box-shadow:0 0 10px rgba(245,158,11,.5)}
+.rank-2{background:linear-gradient(135deg,#cbd5e1,#94a3b8);color:#1e293b;box-shadow:0 0 8px rgba(148,163,184,.4)}
+.rank-3{background:linear-gradient(135deg,#d97706,#92400e);color:#fff;box-shadow:0 0 8px rgba(180,83,9,.4)}
+.rank-chip{font-size:.63rem;font-weight:700;padding:2px 7px;border-radius:4px;background:rgba(168,85,247,.1);color:#c084fc;font-family:'Share Tech Mono',monospace}
 .lb-loading{text-align:center;color:var(--muted2);padding:40px;font-size:.82rem;font-family:'Share Tech Mono',monospace}
-.lb-spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(16,185,129,.22);border-top-color:var(--green);border-radius:50%;animation:spin .7s linear infinite;margin-right:8px;vertical-align:middle}
+.lb-spinner{display:inline-block;width:18px;height:18px;border:2px solid rgba(168,85,247,.22);border-top-color:var(--purple);border-radius:50%;animation:spin .7s linear infinite;margin-right:8px;vertical-align:middle}
 @keyframes spin{to{transform:rotate(360deg)}}
 
 #shareScreen{align-items:center}
 .share-wrap{width:100%;max-width:480px}
 #shareCanvas{border-radius:12px;max-width:100%;display:block;margin:0 auto 16px}
+
+/* subject section header in review */
+.review-btn-wrap{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:8px}
 </style>
 </head>
 <body>
@@ -179,28 +195,62 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 
 <!-- HOME -->
 <div id="homeScreen" class="screen active">
-  <div class="logo-wrap">
-    <svg class="logo-hex" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="55,4 101,29.5 101,80.5 55,106 9,80.5 9,29.5" stroke="#10b981" stroke-width="1.5" stroke-dasharray="6 4" fill="none" opacity="0.7"/>
-      <polygon points="55,18 89,37.5 89,72.5 55,92 21,72.5 21,37.5" stroke="#14b8a6" stroke-width="1" stroke-dasharray="4 6" fill="none" opacity="0.4"/>
+  <div class="brain-wrap">
+    <div class="brain-ring"></div>
+    <div class="brain-ring"></div>
+    <div class="brain-ring"></div>
+    <div class="brain-glow"></div>
+    <svg class="brain-svg" width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <!-- stylized brain SVG -->
+      <defs>
+        <linearGradient id="bg1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#c084fc"/>
+          <stop offset="50%" style="stop-color:#a855f7"/>
+          <stop offset="100%" style="stop-color:#ec4899"/>
+        </linearGradient>
+        <linearGradient id="bg2" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#8b5cf6"/>
+          <stop offset="100%" style="stop-color:#6366f1"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- left hemisphere -->
+      <path d="M50 18 C36 14 20 20 16 34 C12 44 14 52 18 58 C14 62 13 70 18 76 C24 84 36 86 44 82 C48 88 50 90 50 90 L50 18Z"
+            fill="url(#bg1)" filter="url(#glow)" opacity="0.95"/>
+      <!-- right hemisphere -->
+      <path d="M50 18 C64 14 80 20 84 34 C88 44 86 52 82 58 C86 62 87 70 82 76 C76 84 64 86 56 82 C52 88 50 90 50 90 L50 18Z"
+            fill="url(#bg2)" filter="url(#glow)" opacity="0.95"/>
+      <!-- brain folds left -->
+      <path d="M30 32 Q24 40 26 50" stroke="rgba(255,255,255,.35)" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M22 48 Q20 58 26 66" stroke="rgba(255,255,255,.3)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <path d="M34 62 Q28 70 32 78" stroke="rgba(255,255,255,.25)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <!-- brain folds right -->
+      <path d="M70 32 Q76 40 74 50" stroke="rgba(255,255,255,.35)" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M78 48 Q80 58 74 66" stroke="rgba(255,255,255,.3)" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <path d="M66 62 Q72 70 68 78" stroke="rgba(255,255,255,.25)" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+      <!-- center divider -->
+      <line x1="50" y1="20" x2="50" y2="88" stroke="rgba(255,255,255,.2)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <!-- stem -->
+      <rect x="46" y="87" width="8" height="8" rx="2" fill="rgba(168,85,247,.7)"/>
+      <!-- highlight -->
+      <ellipse cx="36" cy="30" rx="7" ry="4" fill="rgba(255,255,255,.12)" transform="rotate(-20 36 30)"/>
     </svg>
-    <div class="logo-icon">⚗️</div>
   </div>
-  <div class="title">Pharmacology Quiz</div>
+  <div class="subtitle-tag">🧠 Nervous System Science</div>
+  <div class="title">NSS Quiz</div>
   <div class="title-underline"></div>
   <div class="features-grid">
-    <div class="feat-item"><span class="feat-icon">❓</span><div><div class="feat-val">20 Qs</div><div class="feat-lbl">Questions</div></div></div>
-    <div class="feat-item"><span class="feat-icon">❤️</span><div><div class="feat-val">8 Lives</div><div class="feat-lbl">Per game</div></div></div>
-    <div class="feat-item"><span class="feat-icon">⏱️</span><div><div class="feat-val">18s / 25s</div><div class="feat-lbl">Normal / Boss</div></div></div>
+    <div class="feat-item"><span class="feat-icon">❓</span><div><div class="feat-val">42 Qs</div><div class="feat-lbl">Questions</div></div></div>
+    <div class="feat-item"><span class="feat-icon">❤️</span><div><div class="feat-val">10 Lives</div><div class="feat-lbl">Per game</div></div></div>
+    <div class="feat-item"><span class="feat-icon">⏱️</span><div><div class="feat-val">20s / 26s</div><div class="feat-lbl">Normal / Boss</div></div></div>
     <div class="feat-item"><span class="feat-icon">⚡</span><div><div class="feat-val">×4 Combo</div><div class="feat-lbl">Streak bonus</div></div></div>
-    <div class="feat-item"><span class="feat-icon">💀</span><div><div class="feat-val">Boss Qs</div><div class="feat-lbl">Every 7 questions</div></div></div>
+    <div class="feat-item"><span class="feat-icon">💀</span><div><div class="feat-val">Boss Qs</div><div class="feat-lbl">3 boss questions</div></div></div>
     <div class="feat-item"><span class="feat-icon">🏆</span><div><div class="feat-val">Ranks</div><div class="feat-lbl">Earn your title</div></div></div>
   </div>
   <div class="home-card">
-    <div class="card-header-bar">
-      <div class="card-dot cd1"></div><div class="card-dot cd2"></div><div class="card-dot cd3"></div>
-      <div class="card-label">player_register.exe</div>
-    </div>
     <div class="name-label">Enter your full name <span>(letters only)</span></div>
     <div class="name-row">
       <input class="name-input" id="firstName" placeholder="First name" maxlength="15" onkeydown="if(event.key==='Enter')startGame()">
@@ -216,9 +266,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 <div id="gameScreen" class="screen">
   <div class="stats-bar">
     <div class="stat-box"><div class="stat-label">Score</div><div class="stat-val" id="scoreVal">0</div></div>
-    <div class="stat-box"><div class="stat-label">Question</div><div class="stat-val" id="qNum">1/20</div></div>
-    <div class="stat-box"><div class="stat-label">Lives</div><div class="stat-val" id="livesVal">3</div></div>
-    <div class="stat-box" id="timerBox"><div class="stat-label">Timer</div><div class="stat-val" id="timerVal">18</div></div>
+    <div class="stat-box"><div class="stat-label">Question</div><div class="stat-val" id="qNum">1/42</div></div>
+    <div class="stat-box"><div class="stat-label">Lives</div><div class="stat-val" id="livesVal">10</div></div>
+    <div class="stat-box" id="timerBox"><div class="stat-label">Timer</div><div class="stat-val" id="timerVal">20</div></div>
     <div class="stat-box"><div class="stat-label">Streak</div><div class="stat-val" id="bestStreakVal">0</div></div>
   </div>
   <div class="lives-display" id="heartsRow"></div>
@@ -229,8 +279,9 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div id="timerBar"><div id="timerFill" style="width:100%"></div></div>
   <div class="question-card" id="qCard">
     <div class="q-meta">
-      <span class="q-num-tag" id="qLabel">Q 1 of 15</span>
+      <span class="q-num-tag" id="qLabel">Q 1 of 42</span>
       <div class="badges">
+        <span class="q-subject-tag" id="qSubjectTag">Anatomy</span>
         <span class="q-type-tag q-type-mcq" id="qTypeTag">MCQ</span>
         <span class="boss-badge" id="bossBadge" style="display:none">💀 BOSS</span>
       </div>
@@ -239,14 +290,16 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
     <div class="options" id="optContainer"></div>
     <div class="bottom-row">
       <div class="combo-display cx1" id="comboDisp">×1 Combo</div>
-      <button class="lifeline-btn" id="lifelineBtn" onclick="useLifeline()">⏰ +10s (<span id="lifelineCount">3</span>)</button>
+      <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end">
+        <button class="skip-btn" id="skipBtn" onclick="skipQuestion()">↩ Skip (<span id="skipCount">5</span>)</button>
+        <button class="lifeline-btn" id="lifelineBtn" onclick="useLifeline()">⏰ +10s (<span id="lifelineCount">5</span>)</button>
+      </div>
     </div>
   </div>
 </div>
 
 <!-- END -->
 <div id="endScreen" class="screen">
-  <div class="end-trophyrow" id="endEmoji">🏆</div>
   <div class="rank-title-display" id="rankTitle">—</div>
   <div class="rank-subtitle" id="rankSub">—</div>
   <div class="end-score-big" id="endScore">0</div>
@@ -254,6 +307,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="end-stats" id="endStats"></div>
   <div style="width:100%;max-width:380px;display:flex;flex-direction:column;gap:10px">
     <button class="btn btn-primary" onclick="startGame()">▶ Play Again</button>
+    <button class="btn btn-secondary" id="reviewBtn" onclick="showWrongReview()" style="display:none">📋 Review Wrong Answers</button>
     <button class="btn btn-cyan" onclick="goShare()">📸 Share Score</button>
     <button class="btn btn-secondary" onclick="showLeaderboard('end')">🏆 Leaderboard</button>
     <button class="btn btn-secondary" onclick="goHome()">← Home</button>
@@ -292,49 +346,94 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
 </div>
 
 <script>
-/* ═══════════ QUESTIONS ═══════════ */
+/* ═══════════ QUESTIONS — 42 total, 3 boss ═══════════ */
+
+// Subject labels for display
+// Normal questions in PDF order: Anatomy(12), Physiology(12), Pharmacology(9), Biochemistry(2), Pathology(2), Histology(2)
+// Boss questions: Anatomy Q13, Physiology Q13, Pharmacology Q10
+
 const NORMAL_Q=[
-  {q:"Which antidepressant drug class works by blocking the amine reuptake pump, leading to longer availability of norepinephrine or serotonin at the receptor?",o:["MAO Inhibitors","Tricyclic Antidepressants","SSRIs","Atypical Antidepressants"],a:1,t:"mcq"},
-  {q:"True or False: SSRIs are 300–3000-fold more selective for 5-HT transporters than for NE transporters.",o:["True","False"],a:0,t:"tf"},
-  {q:"A patient on phenelzine eats aged cheese and develops severe hypertension. What is the treatment?",o:["Cyproheptadine","Sodium bicarbonate","Phentolamine","Fluoxetine"],a:2,t:"mcq"},
-  {q:"Which antidepressant is the drug of choice for a depressed patient who also wants to quit smoking?",o:["Fluoxetine","Mirtazapine","Bupropion","Sertraline"],a:2,t:"mcq"},
-  {q:"True or False: TCA overdose causing widened QRS is treated with sodium bicarbonate.",o:["True","False"],a:0,t:"tf"},
-  {q:"Which atypical antipsychotic is most associated with agranulocytosis and requires regular WBC monitoring?",o:["Olanzapine","Haloperidol","Clozapine","Risperidone"],a:2,t:"mcq"},
-  {q:"Tardive dyskinesia is a side effect most commonly caused by which class of antipsychotic?",o:["Atypical (SGAs)","Typical (FGAs)","SSRIs","MAO Inhibitors"],a:1,t:"mcq"},
-  {q:"True or False: Clonus is the most specific neuromuscular sign of serotonin syndrome.",o:["True","False"],a:0,t:"tf"},
-  {q:"Which drug class causes drug-induced parkinsonism by blocking D2 dopamine receptors?",o:["SSRIs","Benzodiazepines","Antipsychotics","TCAs"],a:2,t:"mcq"},
-  {q:"Mirtazapine enhances 5-HT and NE by which mechanism?",o:["Reuptake inhibition","Antagonism of presynaptic α2 receptors","MAO inhibition","Blockade of D2 receptors"],a:1,t:"mcq"},
-  {q:"True or False: Benzodiazepines increase the FREQUENCY of Cl⁻ channel opening, while barbiturates increase the DURATION.",o:["True","False"],a:0,t:"tf"},
-  {q:"What is the drug of choice for absence seizures (petit mal epilepsy)?",o:["Valproic acid","Phenytoin","Ethosuximide","Carbamazepine"],a:2,t:"mcq"},
-  {q:"Which antiepileptic drug also has an anti-diuretic action?",o:["Phenytoin","Valproic acid","Lamotrigine","Carbamazepine"],a:3,t:"mcq"},
-  {q:"Flumazenil is used clinically because it:",o:["Increases GABA duration","Blocks only barbiturate receptors","Is a selective competitive antagonist of benzodiazepine receptors","Is an irreversible GABA inhibitor"],a:2,t:"mcq"},
-  {q:"True or False: Lithium normalizes mood in approximately 70% of bipolar patients.",o:["True","False"],a:0,t:"tf"},
-  {q:"Which sedative-hypnotic drug class has a NARROW margin of safety and a steeper dose-response curve?",o:["Benzodiazepines","Z-drugs","Barbiturates","Melatonin agonists"],a:2,t:"mcq"},
-  {q:"True or False: Phenytoin's mechanism of action is blocking voltage-gated Na⁺ channels to prevent high-frequency neuronal discharges.",o:["True","False"],a:0,t:"tf"},
-  {q:"Valproic acid inhibits GABA transaminase. What is the result of this action?",o:["Decreased GABA levels","Increased GABA levels","Blockade of Na⁺ channels only","Inhibition of dopamine reuptake"],a:1,t:"mcq"},
-  {q:"Which adverse effect is unique to Clozapine and requires mandatory regular blood count monitoring?",o:["Tardive dyskinesia","Neuroleptic malignant syndrome","Agranulocytosis","Hyperprolactinemia"],a:2,t:"mcq"},
-  {q:"True or False: Carbamazepine has an anti-diuretic effect and can be used in diabetes insipidus.",o:["True","False"],a:0,t:"tf"},
+  // ── ANATOMY (12 normal) ──
+  {q:"Through which of the following foramina does cerebrospinal fluid (CSF) pass from the lateral ventricle into the third ventricle?",o:["Cerebral aqueduct","Foramen of Luschka","Foramen of Magendie","Foramen of Monro"],a:3,t:"mcq",s:"Anatomy"},
+  {q:"Which of the following dural folds separates the occipital lobes of the cerebrum from the cerebellum and contains a notch for the passage of the midbrain?",o:["Falx cerebri","Falx cerebelli","Tentorium cerebelli","Diaphragma sellae"],a:2,t:"mcq",s:"Anatomy"},
+  {q:"Which cranial nerve emerges from the pre-olivary fissure, located between the pyramid and the olive of the medulla?",o:["Glossopharyngeal (IX)","Vagus (X)","Accessory (XI)","Hypoglossal (XII)"],a:3,t:"mcq",s:"Anatomy"},
+  {q:"The 'Facial Colliculus' in the floor of the fourth ventricle is physically created by which developmental process?",o:["The decussation of the pyramids","The facial nerve looping around the abducens nucleus (Neurobiotaxis)","The expansion of the vestibular nuclei","The crossing of the medial lemniscus"],a:1,t:"mcq",s:"Anatomy"},
+  {q:"Which functional subdivision of the cerebellum is phylogenetically the oldest and responsible for maintaining balance and eye movements?",o:["Spinocerebellum (Paleocerebellum)","Cerebrocerebellum (Neocerebellum)","Vestibulocerebellum (Archicerebellum)","Vermis"],a:2,t:"mcq",s:"Anatomy"},
+  {q:"In the midbrain, the cerebral peduncles are divided into an anterior part (crus cerebri) and a posterior part (tegmentum) by which structure?",o:["Tectum","Red nucleus","Substantia nigra","Cerebral aqueduct"],a:2,t:"mcq",s:"Anatomy"},
+  {q:"Which part of the diencephalon acts as the primary relay station for all main sensory systems except for the olfactory pathway?",o:["Hypothalamus","Thalamus","Epithalamus","Subthalamus"],a:1,t:"mcq",s:"Anatomy"},
+  {q:"Through which cranial exit does the Mandibular division (V3) of the Trigeminal nerve leave the skull?",o:["Foramen rotundum","Superior orbital fissure","Foramen ovale","Jugular foramen"],a:2,t:"mcq",s:"Anatomy"},
+  {q:"Which group of cranial nerves carries parasympathetic (General Visceral Efferent) fibers?",o:["I, II, III, and IV","III, VII, IX, and X","V, VII, X, and XII","VI, VIII, XI, and XII"],a:1,t:"mcq",s:"Anatomy"},
+  {q:"What structure forms the anterior boundary/wall of the third ventricle?",o:["Thalamus and Hypothalamus","Lamina terminalis and anterior commissure","Pineal body and posterior commissure","Ependyma and pia mater"],a:1,t:"mcq",s:"Anatomy"},
+  {q:"Damage to the 'Arbor Vitae' — the tree-like white matter pattern — would occur in which part of the brain?",o:["Medulla oblongata","Cerebrum","Cerebellum","Midbrain"],a:2,t:"mcq",s:"Anatomy"},
+  {q:"Which cranial nerve is unique for emerging from the posterior surface of the midbrain and possessing the longest intracranial course of all the cranial nerves?",o:["Oculomotor nerve (III)","Trochlear nerve (IV)","Abducent nerve (VI)","Glossopharyngeal nerve (IX)"],a:1,t:"mcq",s:"Anatomy"},
+
+  // ── PHYSIOLOGY (12 normal) ──
+  {q:"Which of the following is the correct anatomical origin for the sympathetic division of the ANS?",o:["Cranial nerves III, VII, IX, and X","Sacral spinal cord segments S2–S4","Spinal cord segments T1 to L2/L3","Brainstem and cervical spinal cord"],a:2,t:"mcq",s:"Physiology"},
+  {q:"In the sympathetic nervous system, what is the characteristic length of the preganglionic and postganglionic fibers?",o:["Long preganglionic and short postganglionic","Short preganglionic and long postganglionic","Both fibers are of equal length","Fibers synapse directly on skeletal muscle without ganglia"],a:1,t:"mcq",s:"Physiology"},
+  {q:"Which higher center is responsible for integrating ANS functions with water balance, temperature regulation, and hunger?",o:["Spinal cord","Pons","Hypothalamus","Midbrain"],a:2,t:"mcq",s:"Physiology"},
+  {q:"What is the primary neurotransmitter released by all autonomic preganglionic neurons, both sympathetic and parasympathetic?",o:["Norepinephrine","Epinephrine","Acetylcholine (ACh)","Dopamine"],a:2,t:"mcq",s:"Physiology"},
+  {q:"Although sweat glands are part of the sympathetic division, their postganglionic neurons release ACh to act on which receptor?",o:["Alpha-1 (α1)","Beta-2 (β2)","Nicotinic (N)","Muscarinic (M)"],a:3,t:"mcq",s:"Physiology"},
+  {q:"Which receptor is primarily responsible for increasing heart rate, conduction velocity, and contractility when stimulated?",o:["α1 Adrenergic","β1 Adrenergic","β2 Adrenergic","M3 Muscarinic"],a:1,t:"mcq",s:"Physiology"},
+  {q:"Stimulation of β2 adrenergic receptors in the vascular smooth muscle of skeletal muscles results in:",o:["Vasoconstriction","Vasodilation","No effect","Increased platelet aggregation"],a:1,t:"mcq",s:"Physiology"},
+  {q:"The α1 adrenergic receptor uses which G-protein and second messenger mechanism?",o:["Gs and increased cAMP","Gi and decreased cAMP","Gq and increased IP3/Ca2+","Ion channels for Na+ and K+"],a:2,t:"mcq",s:"Physiology"},
+  {q:"Which receptor subtype is found in the heart and produces inhibitory effects, such as a decreased heart rate?",o:["M1","M2","M3","β1"],a:1,t:"mcq",s:"Physiology"},
+  {q:"The adrenal medulla is considered a specialized sympathetic ganglion where preganglionic fibers synapse on chromaffin cells to secrete:",o:["100% Norepinephrine","80% Epinephrine and 20% Norepinephrine","50% Acetylcholine and 50% Epinephrine","Mostly Substance P and Nitric Oxide"],a:1,t:"mcq",s:"Physiology"},
+  {q:"In the autonomic reflex arc for blood pressure regulation (baroreceptor reflex), which area of the brain serves as the integration center?",o:["Hypothalamus","Cerebrum","Medulla oblongata","Cerebellum"],a:2,t:"mcq",s:"Physiology"},
+  {q:"A patient presenting with high blood pressure, heavy sweating, rapid heartbeat (tachycardia), and paleness may be suffering from a tumor of the adrenal medulla known as:",o:["Horner's Syndrome","Raynaud's Disease","Pheochromocytoma","Overactive bladder"],a:2,t:"mcq",s:"Physiology"},
+
+  // ── PHARMACOLOGY (9 normal) ──
+  {q:"Which of the following correctly describes the difference in the mechanism of action between Benzodiazepines (BZDs) and Barbiturates on the GABAA receptor?",o:["BZDs increase the duration of chloride channel opening, while Barbiturates increase the frequency.","BZDs increase the frequency of chloride channel opening, while Barbiturates increase the duration.","Both BZDs and Barbiturates only increase the frequency of opening.","BZDs inhibit GABAA activity while Barbiturates enhance it."],a:1,t:"mcq",s:"Pharmacology"},
+  {q:"Which sedative-hypnotic agent is a melatonin receptor agonist specifically indicated for sleep-onset insomnia and is considered safe for use in the elderly?",o:["Zolpidem","Ramelteon","Suvorexant","Phenobarbital"],a:1,t:"mcq",s:"Pharmacology"},
+  {q:"A patient presents with absence seizures (Petit Mal). Which of the following is considered the drug of choice for this condition?",o:["Phenytoin","Carbamazepine","Ethosuximide","Diazepam"],a:2,t:"mcq",s:"Pharmacology"},
+  {q:"Which anti-epileptic drug is famously associated with adverse effects such as gingival hyperplasia, hirsutism, and teratogenic effects like 'fetal hydantoin syndrome'?",o:["Phenytoin","Valproic acid","Ethosuximide","Gabapentin"],a:0,t:"mcq",s:"Pharmacology"},
+  {q:"Among the antipsychotic drugs, which agent is reserved for treatment-resistant schizophrenia due to its risk of causing life-threatening agranulocytosis?",o:["Haloperidol","Risperidone","Clozapine","Aripiprazole"],a:2,t:"mcq",s:"Pharmacology"},
+  {q:"Which statement best describes the unique pharmacological profile of Aripiprazole?",o:["It is a high-potency D2 receptor antagonist.","It is an irreversible MAO inhibitor.","It acts as a partial D2 receptor agonist, serving as a dopamine 'stabilizer'.","It is primarily used to treat neuropathic pain."],a:2,t:"mcq",s:"Pharmacology"},
+  {q:"A patient treated with a Monoamine Oxidase Inhibitor (MAOI) eats a meal rich in tyramine and develops a severe hypertensive crisis. This is known as:",o:["Serotonin Syndrome","The Cheese Reaction","Neuroleptic Malignant Syndrome","Grey Baby Syndrome"],a:1,t:"mcq",s:"Pharmacology"},
+  {q:"Which antidepressant is particularly useful for patients who wish to quit smoking and has the clinical advantage of not causing sexual dysfunction?",o:["Fluoxetine","Bupropion","Amitriptyline","Venlafaxine"],a:1,t:"mcq",s:"Pharmacology"},
+  {q:"When differentiating between Serotonin Syndrome and Neuroleptic Malignant Syndrome (NMS) in a clinical setting, which physical exam finding is most specific to Serotonin Syndrome?",o:["Hyperthermia","Autonomic instability","Lead-pipe muscle rigidity","Clonus and hyperreflexia"],a:3,t:"mcq",s:"Pharmacology"},
+
+  // ── BIOCHEMISTRY (2) ──
+  {q:"Which coenzyme, derived from Vitamin B6, is required by all aminotransferases for their catalytic activity?",o:["Adenosine triphosphate (ATP)","Nicotinamide adenine dinucleotide (NAD+)","Pyridoxal phosphate (PLP)","Guanosine triphosphate (GTP)"],a:2,t:"mcq",s:"Biochemistry"},
+  {q:"Which of the following is a primary source that supplies the amino acid pool in the human body?",o:["Breakdown of nucleic acids","Degradation of endogenous proteins","Synthesis of fatty acids","Conversion of urea into ammonia"],a:1,t:"mcq",s:"Biochemistry"},
+
+  // ── PATHOLOGY (2) ──
+  {q:"A lumbar puncture is performed on a patient suspected of having acute suppurative meningitis. Which of the following sets of findings in the cerebrospinal fluid (CSF) is most characteristic of this condition?",o:["High sugar, low protein, and low pressure","Low sugar, high protein, and high pressure","Normal sugar, high protein, and low pressure","Low sugar, low protein, and high pressure"],a:1,t:"mcq",s:"Pathology"},
+  {q:"During the microscopic examination of brain tissue from a patient who died of Rabies, the presence of specific intracytoplasmic acidophilic bodies is noted, particularly in the hippocampus and cerebellum. These structures are known as:",o:["Rosenthal fibers","Corpora amylacia","Negri bodies","Owl's eye inclusions"],a:2,t:"mcq",s:"Pathology"},
+
+  // ── HISTOLOGY (2) ──
+  {q:"In which specific segments of the spinal cord are the lateral horns, which contain sympathetic nuclei, found?",o:["All segments of the spinal cord","Cervical and Thoracic segments","Thoracic and upper two lumbar segments","Lumbar and Sacral segments"],a:2,t:"mcq",s:"Histology"},
+  {q:"Which layer of the cerebral cortex is identified as being the narrowest layer?",o:["Molecular layer (I)","External pyramidal layer (III)","Internal granular layer (IV)","Multiform layer (VI)"],a:2,t:"mcq",s:"Histology"},
 ];
 
 const BOSS_Q=[
-  {q:"💀 BOSS: A patient on sertraline is given tramadol for pain and develops agitation, hyperthermia, hyperreflexia, and clonus. What is the diagnosis, and what is the first-line management?",o:["Neuroleptic Malignant Syndrome — treated with dantrolene","Serotonin Syndrome — stop offending drugs and give cyproheptadine","TCA overdose — give sodium bicarbonate","MAOI cheese reaction — give phentolamine"],a:1,t:"mcq"},
-  {q:"💀 BOSS: Which statement BEST distinguishes typical from atypical antipsychotics regarding mechanism and side-effect profile?",o:["Typicals block D2 + 5-HT2A → less EPS; Atypicals block D2 only → more EPS","Typicals block D2 only → more EPS and hyperprolactinemia; Atypicals block D2 + 5-HT2A → less EPS but risk metabolic syndrome","Both classes have identical EPS profiles but differ only in receptor selectivity","Atypicals cause more tardive dyskinesia than typicals due to stronger D2 blockade"],a:1,t:"mcq"},
+  {q:"💀 BOSS: A lesion in the midbrain tegmentum involving the red nucleus, the superior cerebellar peduncle, and the fibers of the oculomotor nerve results in which syndrome?",o:["Weber's Syndrome","Benedikt's Syndrome","Raymond's Syndrome","Millard-Gubler Syndrome"],a:1,t:"mcq",s:"Anatomy",boss:true},
+  {q:"💀 BOSS: During a parasympathetic reflex initiated by a sudden increase in blood pressure, the vagus nerve releases Acetylcholine (ACh) onto the SA node of the heart. What specific cellular event occurs following the activation of the M2 receptors to slow the heart rate?",o:["Activation of Gq protein and stimulation of phospholipase C to increase IP3.","Closing of Na+ channels to prevent spontaneous Phase 4 depolarization.","Activation of Gi protein, inhibition of adenylate cyclase, and the opening of K+ channels.","Phosphorylation of calcium-binding proteins through a Gs protein-mediated increase in cAMP."],a:2,t:"mcq",s:"Physiology",boss:true},
+  {q:"💀 BOSS: A patient who has overdosed on a Tricyclic Antidepressant (TCA) like Amitriptyline presents with cardiac arrhythmias and a widened QRS complex. Which of the following is the most appropriate pharmacological intervention to manage this cardiotoxicity?",o:["Atropine","Sodium bicarbonate","Naloxone","Flumazenil"],a:1,t:"mcq",s:"Pharmacology",boss:true},
 ];
 
-/* ═══════════ RANKS REMOVED ═══════════ */
+/* Boss question positions in a 42-Q sequence:
+   Anatomy boss after Q12 → index 12 (position 13)
+   Physiology boss after Q25 → index 25 (position 26)
+   Pharmacology boss after Q36 → index 36 (position 37)
+   Total = 39 normal + 3 boss = 42 questions
+*/
+const BOSS_POSITIONS = new Set([12, 25, 36]);
+
+/* ═══════════ RANKS ═══════════ */
 function getAccRank(acc,total,correct){
-  if(correct===total&&total>0) return {label:'Professor 🧠',color:'#fbbf24',effect:'professor'};
-  if(acc>=75)  return {label:'Future Doctor',color:'#10b981',effect:'future_doctor'};
+  if(correct===total&&total>0) return {label:'Neuroscientist 🧠',color:'#fbbf24',effect:'professor'};
+  if(acc>=75)  return {label:'Future Doctor',color:'#a855f7',effect:'future_doctor'};
   if(acc>=50)  return {label:'Patient Survived',color:'#14b8a6',effect:'survived'};
   return       {label:'Patient Died 😭',color:'#ef4444',effect:'died'};
 }
 
 /* ═══════════ STATE ═══════════ */
-const TOTAL_Q=20;
+const TOTAL_Q=42;
+const LIVES=10;
 let gs={};
 let timerInt=null;
 let lbFrom='home';
-let hasPlayedEver=!!localStorage.getItem('pharmaHasPlayed');
+let hasPlayedEver=!!localStorage.getItem('nssHasPlayed');
 let lastEntry=null;
 let sessionId='';
 let audioCtx=null;
@@ -364,7 +463,7 @@ function initParticles(){
   const c=document.getElementById('particles'),ctx=c.getContext('2d');
   c.width=window.innerWidth;c.height=window.innerHeight;
   const pts=Array.from({length:55},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+.5,vx:(Math.random()-.5)*.3,vy:(Math.random()-.5)*.3,a:Math.random()*.5+.2}));
-  function draw(){ctx.clearRect(0,0,c.width,c.height);pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(16,185,129,${p.a*.3})`;ctx.fill();p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=c.width;if(p.x>c.width)p.x=0;if(p.y<0)p.y=c.height;if(p.y>c.height)p.y=0;});requestAnimationFrame(draw);}
+  function draw(){ctx.clearRect(0,0,c.width,c.height);pts.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(168,85,247,${p.a*.25})`;ctx.fill();p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x=c.width;if(p.x>c.width)p.x=0;if(p.y<0)p.y=c.height;if(p.y>c.height)p.y=0;});requestAnimationFrame(draw);}
   draw();window.addEventListener('resize',()=>{c.width=window.innerWidth;c.height=window.innerHeight;});
 }
 
@@ -394,22 +493,43 @@ function validateNames(){
 
 /* ═══════════ GAME SETUP ═══════════ */
 function startGame(){
-  if(localStorage.getItem('pharmaPlayed')){showToast('⛔ You can only play once!');return;}
   const fullName=validateNames();if(!fullName)return;
+  const isTester=(fullName.toLowerCase()==='bug test');
+  if(!isTester&&localStorage.getItem('nssPlayed')){showToast('⛔ You can only play once!');return;}
   clearInterval(timerInt);
 
-  /* Boss at positions 6 and 13 (Q7 and Q14) — 1 boss every 7 questions, 2 total */
-  const bossPositions=new Set([9,17]);
-  const normals=[...NORMAL_Q].sort(()=>Math.random()-.5);
-  const bosses=[...BOSS_Q].sort(()=>Math.random()-.5);
-  const sequence=[];let ni=0,bi=0;
-  for(let i=0;i<TOTAL_Q;i++){
-    if(bossPositions.has(i)&&bi<bosses.length){sequence.push({...bosses[bi++],boss:true});}
-    else{sequence.push({...normals[ni++],boss:false});}
-  }
+  // Build the 42-question sequence:
+  // positions 0-11 = normals (Anatomy 12), 12 = Anatomy boss,
+  // 13-24 = normals (Physiology 12), 25 = Physiology boss,
+  // 26-34 = normals (Pharma 9), 35 = Pharma boss (wait - indices shift)
+  // Actually: fixed positions with shuffled normals within each subject block
+
+  const anat  = NORMAL_Q.slice(0,12).sort(()=>Math.random()-.5);
+  const physio = NORMAL_Q.slice(12,24).sort(()=>Math.random()-.5);
+  const pharma = NORMAL_Q.slice(24,33).sort(()=>Math.random()-.5);
+  const bio    = NORMAL_Q.slice(33,35).sort(()=>Math.random()-.5);
+  const path   = NORMAL_Q.slice(35,37).sort(()=>Math.random()-.5);
+  const histo  = NORMAL_Q.slice(37,39).sort(()=>Math.random()-.5);
+
+  const sequence=[];
+  // Anatomy block: 12 normals + boss at index 12
+  anat.forEach(q=>sequence.push({...q,boss:false}));
+  sequence.push({...BOSS_Q[0],boss:true});
+  // Physiology block: 12 normals + boss at index 25
+  physio.forEach(q=>sequence.push({...q,boss:false}));
+  sequence.push({...BOSS_Q[1],boss:true});
+  // Pharmacology block: 9 normals + boss
+  pharma.forEach(q=>sequence.push({...q,boss:false}));
+  sequence.push({...BOSS_Q[2],boss:true});
+  // Biochemistry
+  bio.forEach(q=>sequence.push({...q,boss:false}));
+  // Pathology
+  path.forEach(q=>sequence.push({...q,boss:false}));
+  // Histology
+  histo.forEach(q=>sequence.push({...q,boss:false}));
 
   sessionId=Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-  gs={name:fullName,questions:sequence,current:0,score:0,lives:8,combo:1,streak:0,bestStreak:0,lifelines:3,timeLeft:18,totalTime:0,correct:0,bossCorrect:0,startTime:Date.now(),_gameOver:false};
+  gs={name:fullName,isTester,questions:sequence,current:0,score:0,lives:LIVES,combo:1,streak:0,bestStreak:0,lifelines:5,skips:5,timeLeft:20,totalTime:0,correct:0,bossCorrect:0,wrongAnswers:[],startTime:Date.now(),_gameOver:false};
   buildHeartsRow();buildStreakDots();
   showScreen('gameScreen');
   runCountdown(()=>loadQuestion());
@@ -430,7 +550,7 @@ function runCountdown(cb){
 
 function buildHeartsRow(){
   const row=document.getElementById('heartsRow');row.innerHTML='';
-  for(let i=0;i<8;i++){const s=document.createElement('span');s.className='heart';s.id='h'+i;s.textContent='❤️';row.appendChild(s);}
+  for(let i=0;i<LIVES;i++){const s=document.createElement('span');s.className='heart';s.id='h'+i;s.textContent='❤️';row.appendChild(s);}
 }
 function buildStreakDots(){
   const d=document.getElementById('streakDots');d.innerHTML='';
@@ -439,10 +559,12 @@ function buildStreakDots(){
 
 /* ═══════════ QUESTIONS ═══════════ */
 function loadQuestion(){
-  if(gs.current>=TOTAL_Q||gs.lives<=0){endGame();return;}
+  if(gs.current>=gs.questions.length||gs.lives<=0){endGame();return;}
   clearInterval(timerInt);
   const q=gs.questions[gs.current];
   const isBoss=q.boss===true;
+  const skipBtn=document.getElementById('skipBtn');
+  if(skipBtn){skipBtn.disabled=(isBoss||q.wasSkipped||gs.skips<=0);}
   if(isBoss){showBossAlert(()=>actuallyLoadQuestion(q,isBoss));}
   else{actuallyLoadQuestion(q,isBoss);}
 }
@@ -450,28 +572,40 @@ function loadQuestion(){
 function showBossAlert(cb){
   playSound('boss_music');
   const ov=document.createElement('div');ov.className='boss-overlay';
-  ov.innerHTML=`<div class="boss-skull">💀</div><div class="boss-title">BOSS QUESTION</div><div class="boss-sub">+250 pts · 25 seconds · No mercy</div>`;
+  ov.innerHTML=`<div class="boss-skull">💀</div><div class="boss-title">BOSS QUESTION</div><div class="boss-sub">+250 pts · 26 seconds · No mercy</div>`;
   document.getElementById('gameScreen').appendChild(ov);
   setTimeout(()=>{ov.remove();cb();},2200);
 }
 
 function actuallyLoadQuestion(q,isBoss){
-  const maxTime=isBoss?25:18;
+  const maxTime=isBoss?26:20;
+  gs.maxTime=maxTime;
   gs.timeLeft=maxTime;
-  document.getElementById('qLabel').textContent=`Q ${gs.current+1} of ${TOTAL_Q}`;
-  document.getElementById('qNum').textContent=`${gs.current+1}/${TOTAL_Q}`;
+  document.getElementById('qLabel').textContent=`Q ${gs.current+1} of ${gs.questions.length}`;
+  document.getElementById('qNum').textContent=`${gs.current+1}/${gs.questions.length}`;
   const tag=document.getElementById('qTypeTag');
-  tag.textContent=q.t==='tf'?'True / False':'MCQ';
-  tag.className='q-type-tag '+(q.t==='tf'?'q-type-tf':'q-type-mcq');
+  tag.textContent='MCQ';
+  tag.className='q-type-tag q-type-mcq';
+  // Subject tag
+  const subTag=document.getElementById('qSubjectTag');
+  if(subTag){subTag.textContent=q.s||'';subTag.style.display=q.s?'inline-flex':'none';}
   document.getElementById('bossBadge').style.display=isBoss?'inline-flex':'none';
   document.getElementById('qCard').className='question-card'+(isBoss?' boss-card':'');
   document.getElementById('timerFill').className=isBoss?'boss-timer':'';
   document.getElementById('timerBox').className='stat-box'+(isBoss?' boss-stat':'');
   document.getElementById('qText').textContent=q.q;
+  let sb=document.getElementById('skippedBadge');
+  if(q.wasSkipped){
+    if(!sb){sb=document.createElement('span');sb.id='skippedBadge';sb.className='skipped-badge';sb.textContent='↩ Revisited';document.getElementById('qLabel').after(sb);}
+  } else {
+    if(sb)sb.remove();
+  }
   const cont=document.getElementById('optContainer');cont.innerHTML='';
   q.o.forEach((opt,i)=>{
     const btn=document.createElement('button');btn.className='opt';btn.textContent=opt;btn.onclick=()=>answer(i,isBoss);cont.appendChild(btn);
   });
+  document.getElementById('skipCount').textContent=gs.skips;
+  document.getElementById('skipBtn').disabled=(gs.questions[gs.current]&&(gs.questions[gs.current].boss||gs.questions[gs.current].wasSkipped||gs.skips<=0));
   updateComboDisplay();startTimer(maxTime);
 }
 
@@ -481,7 +615,7 @@ function startTimer(maxTime){
   fill.classList.remove('warning');let warned=false;let lastTick=-1;
   timerInt=setInterval(()=>{
     gs.timeLeft-=.1;gs.totalTime+=.1;
-    const pct=Math.max(0,(gs.timeLeft/maxTime)*100);
+    const pct=Math.max(0,(gs.timeLeft/Math.max(gs.maxTime,gs.timeLeft))*100);
     fill.style.width=pct+'%';
     const ceil=Math.ceil(gs.timeLeft);tv.textContent=ceil;
     if(gs.timeLeft<=5&&!warned){warned=true;fill.classList.add('warning');}
@@ -492,6 +626,7 @@ function startTimer(maxTime){
 function timeOut(){
   const q=gs.questions[gs.current];disableOpts();
   document.querySelectorAll('.opt')[q.a].classList.add('correct');
+  gs.wrongAnswers.push({q:q.q,options:q.o,correct:q.a,chosen:-1,s:q.s});
   gs.lives--;gs.combo=1;gs.streak=0;
   updateLives();updateStats();updateStreakUI();showFloat('⏰ Time!','#ef4444');
   if(gs.lives<=0){endGame();return;}
@@ -512,10 +647,11 @@ function answer(idx,isBoss){
     if(gs.streak%5===0){confetti();playSound('streak');showStreakPopup(`🔥 ${gs.streak} Streak!`);}
     else if(isBoss){playSound('boss_correct');}
     else{playSound('correct');}
-    showFloat(`+${pts}${isBoss?' 💀':''}`,isBoss?'#f59e0b':'#10b981');
+    showFloat(`+${pts}${isBoss?' 💀':''}`,isBoss?'#f59e0b':'#a855f7');
   } else {
     opts[idx].classList.add('wrong');opts[q.a].classList.add('correct');
     gs.lives--;gs.combo=1;gs.streak=0;
+    gs.wrongAnswers.push({q:q.q,options:q.o,correct:q.a,chosen:idx,s:q.s});
     updateLives();playSound('wrong');showFloat('−1 ❤️','#ef4444');
   }
   updateStats();updateStreakUI();updateComboDisplay();
@@ -527,16 +663,30 @@ function disableOpts(){document.querySelectorAll('.opt').forEach(o=>{o.classList
 function useLifeline(){
   if(gs.lifelines<=0)return;
   gs.lifelines--;
-  const q=gs.questions[gs.current];
-  gs.timeLeft=Math.min(q&&q.boss?25:18,gs.timeLeft+10);
+  gs.timeLeft+=10;
   document.getElementById('lifelineCount').textContent=gs.lifelines;
   document.getElementById('lifelineBtn').disabled=gs.lifelines<=0;
-  showFloat('+10s ⏰','#14b8a6');
+  showFloat('+10s ⏰','#06b6d4');
 }
 
 /* ═══════════ UI ═══════════ */
+function skipQuestion(){
+  if(gs.skips<=0||gs.questions[gs.current].boss||gs.questions[gs.current].wasSkipped)return;
+  clearInterval(timerInt);
+  gs.skips--;
+  document.getElementById('skipCount').textContent=gs.skips;
+  document.getElementById('skipBtn').disabled=(gs.skips<=0);
+  const skipped={...gs.questions[gs.current],wasSkipped:true};
+  gs.questions.splice(gs.current,1);
+  gs.questions.push(skipped);
+  showFloat('↩ Skipped','#f59e0b');
+  gs.combo=1;gs.streak=0;
+  updateComboDisplay();updateStreakUI();
+  loadQuestion();
+}
+
 function updateLives(){
-  for(let i=0;i<8;i++){const h=document.getElementById('h'+i);if(h)h.className='heart'+(i>=gs.lives?' lost':'');}
+  for(let i=0;i<LIVES;i++){const h=document.getElementById('h'+i);if(h)h.className='heart'+(i>=gs.lives?' lost':'');}
   document.getElementById('livesVal').textContent=gs.lives;
 }
 function updateStats(){document.getElementById('scoreVal').textContent=gs.score;document.getElementById('lifelineBtn').disabled=gs.lifelines<=0;}
@@ -561,7 +711,7 @@ function showStreakPopup(txt){
   el.textContent=txt;document.body.appendChild(el);setTimeout(()=>el.remove(),850);
 }
 function confetti(){
-  const cols=['#10b981','#14b8a6','#f59e0b','#84cc16','#ef4444','#34d399','#fff'];
+  const cols=['#a855f7','#ec4899','#f59e0b','#8b5cf6','#ef4444','#c084fc','#fff'];
   for(let i=0;i<80;i++){
     const el=document.createElement('div');el.className='confetti-piece';const sz=5+Math.random()*8;
     el.style.cssText=`width:${sz}px;height:${sz}px;background:${cols[Math.floor(Math.random()*cols.length)]};left:${Math.random()*100}vw;top:-10px;animation-duration:${1.5+Math.random()*1.5}s;animation-delay:${Math.random()*.4}s`;
@@ -575,8 +725,8 @@ function endGame(){
   gs._gameOver=true;
   clearInterval(timerInt);
   hasPlayedEver=true;
-  localStorage.setItem('pharmaHasPlayed','1');
-  localStorage.setItem('pharmaPlayed','1');
+  localStorage.setItem('nssHasPlayed','1');
+  if(!gs.isTester)localStorage.setItem('nssPlayed','1');
 
   const elapsed=Math.round((Date.now()-gs.startTime)/1000);
   const timeDisplay=elapsed>=60?`${Math.floor(elapsed/60)}m ${elapsed%60}s`:`${elapsed}s`;
@@ -608,13 +758,8 @@ function endGame(){
   }
 
   const ar=getAccRank(acc,TOTAL_Q,gs.correct);
-  document.getElementById('endEmoji').textContent=ar.label;
-  document.getElementById('endEmoji').style.color=ar.color;
-  document.getElementById('endEmoji').style.fontSize='1.6rem';
-  document.getElementById('endEmoji').style.fontFamily="'Syne',sans-serif";
-  document.getElementById('endEmoji').style.fontWeight='800';
   document.getElementById('rankTitle').textContent=gs.name;
-  document.getElementById('rankTitle').style.color='#d1fae5';
+  document.getElementById('rankTitle').style.color='#f3e8ff';
   document.getElementById('rankSub').textContent='';
   document.getElementById('endScore').textContent=gs.score;
   document.getElementById('endMark').textContent=`Time: ${timeDisplay}`;
@@ -622,10 +767,12 @@ function endGame(){
     <div class="stat-box"><div class="stat-label">Correct</div><div class="stat-val">${gs.correct}/${TOTAL_Q}</div></div>
     <div class="stat-box"><div class="stat-label">Accuracy</div><div class="stat-val">${acc}%</div></div>
     <div class="stat-box"><div class="stat-label">Best Streak</div><div class="stat-val">${gs.bestStreak}🔥</div></div>
-    <div class="stat-box"><div class="stat-label">Boss Qs ✓</div><div class="stat-val">${gs.bossCorrect}/2</div></div>
+    <div class="stat-box"><div class="stat-label">Boss Qs ✓</div><div class="stat-val">${gs.bossCorrect}/3</div></div>
   `;
   showScreen('endScreen');
   triggerEndEffect(ar.effect);
+  const rb=document.getElementById('reviewBtn');
+  if(rb)rb.style.display=gs.wrongAnswers.length>0?'block':'none';
 }
 
 /* ═══════════ LEADERBOARD ═══════════ */
@@ -673,11 +820,12 @@ function renderLeaderboard(scores){
   scores.forEach((s,i)=>{
     const isMe=lastEntry&&s.sid&&s.sid===lastEntry.sid;
     const rc=i===0?'rank-1':i===1?'rank-2':i===2?'rank-3':'';
+    const medal=i===0?'🥇':i===1?'🥈':i===2?'🥉':i+1;
     const total=s.total||TOTAL_Q;
     html+=`<tr${isMe?' class="me"':''}>
-      <td><span class="rank-badge ${rc}">${i+1}</span></td>
+      <td><span class="rank-badge ${rc}">${medal}</span></td>
       <td>${esc(s.name)}</td>
-      <td style="font-weight:700;color:#10b981">${s.score}</td>
+      <td style="font-weight:700;color:#a855f7">${s.score}</td>
       <td>${s.mark}/${total}</td>
       <td>${s.acc}%</td>
       <td>${s.bestStreak||0}🔥</td>
@@ -691,7 +839,6 @@ function renderLeaderboard(scores){
 
 function triggerEndEffect(effect){
   if(effect==='died'){
-    /* red screen flash + flatline sound */
     const flash=document.createElement('div');
     flash.style.cssText='position:fixed;inset:0;background:rgba(239,68,68,.35);z-index:2000;pointer-events:none;animation:flashFade 1.2s ease-out forwards';
     document.body.appendChild(flash);setTimeout(()=>flash.remove(),1300);
@@ -702,35 +849,26 @@ function triggerEndEffect(effect){
       o.start();o.stop(ctx.currentTime+1.5);
     }}catch(e){}
   } else if(effect==='survived'){
-    /* green glow pulse + soft success chord */
     const glow=document.createElement('div');
-    glow.style.cssText='position:fixed;inset:0;background:rgba(16,185,129,.18);z-index:2000;pointer-events:none;animation:flashFade 1.4s ease-out forwards';
+    glow.style.cssText='position:fixed;inset:0;background:rgba(168,85,247,.18);z-index:2000;pointer-events:none;animation:flashFade 1.4s ease-out forwards';
     document.body.appendChild(glow);setTimeout(()=>glow.remove(),1500);
     try{[392,523,659].forEach((f,i)=>{tone(f,.4,'sine',.14,i*.12);});}catch(e){}
   } else if(effect==='future_doctor'||effect==='professor'){
     confetti();
-    /* hype ascending arpeggio */
     try{[523,659,784,1047,1319].forEach((f,i)=>{tone(f,.25,'sine',.18,i*.1);});}catch(e){}
   }
 }
 
-/* add keyframe for flash if not present */
 (function(){const s=document.createElement('style');s.textContent='@keyframes flashFade{0%{opacity:1}100%{opacity:0}}';document.head.appendChild(s);})();
 
 function formatDate(d){
   if(!d)return '—';
-  /* already DD/MM/YYYY */
   if(/^\d{2}\/\d{2}\/\d{4}$/.test(d))return d;
-  /* try to parse any format and reformat */
-  try{
-    const dt=new Date(d);
-    if(isNaN(dt.getTime()))return d;
-    return String(dt.getDate()).padStart(2,'0')+'/'+String(dt.getMonth()+1).padStart(2,'0')+'/'+dt.getFullYear();
-  }catch(e){return d;}
+  try{const dt=new Date(d);if(isNaN(dt.getTime()))return d;return String(dt.getDate()).padStart(2,'0')+'/'+String(dt.getMonth()+1).padStart(2,'0')+'/'+dt.getFullYear();}catch(e){return d;}
 }
 function esc(str){return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
-function _localSave(e){let s=JSON.parse(localStorage.getItem('pharmaLocal')||'[]');s=s.filter(x=>x.sid!==e.sid);s.push(e);s.sort((a,b)=>b.mark-a.mark||b.score-a.score||a.time-b.time);if(s.length>50)s=s.slice(0,50);localStorage.setItem('pharmaLocal',JSON.stringify(s));}
-function _localLoad(){return JSON.parse(localStorage.getItem('pharmaLocal')||'[]');}
+function _localSave(e){let s=JSON.parse(localStorage.getItem('nssLocal')||'[]');s=s.filter(x=>x.sid!==e.sid);s.push(e);s.sort((a,b)=>b.mark-a.mark||b.score-a.score||a.time-b.time);if(s.length>50)s=s.slice(0,50);localStorage.setItem('nssLocal',JSON.stringify(s));}
+function _localLoad(){return JSON.parse(localStorage.getItem('nssLocal')||'[]');}
 function backFromLb(){if(lbFrom==='end')showScreen('endScreen');else showScreen('homeScreen');}
 
 /* ═══════════ SHARE ═══════════ */
@@ -738,36 +876,60 @@ function goShare(){if(!lastEntry){showToast('Play a game first!');return;}buildS
 function buildShareCanvas(){
   const c=document.getElementById('shareCanvas'),ctx=c.getContext('2d');
   const W=480,H=640;c.width=W;c.height=H;
-  const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#030f0a');bg.addColorStop(.5,'#062016');bg.addColorStop(1,'#030f0a');
+  const bg=ctx.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#06030f');bg.addColorStop(.5,'#130a2a');bg.addColorStop(1,'#06030f');
   ctx.fillStyle=bg;ctx.roundRect(0,0,W,H,24);ctx.fill();
-  const glow=ctx.createRadialGradient(W/2,0,0,W/2,0,220);glow.addColorStop(0,'rgba(16,185,129,.35)');glow.addColorStop(1,'rgba(16,185,129,0)');
+  const glow=ctx.createRadialGradient(W/2,0,0,W/2,0,220);glow.addColorStop(0,'rgba(168,85,247,.35)');glow.addColorStop(1,'rgba(168,85,247,0)');
   ctx.fillStyle=glow;ctx.fillRect(0,0,W,H);
-  ctx.font='68px serif';ctx.textAlign='center';ctx.fillText('⚗️',W/2,110);
+  ctx.font='68px serif';ctx.textAlign='center';ctx.fillText('🧠',W/2,110);
   ctx.font='bold 26px Syne,serif';
-  const gTitle=ctx.createLinearGradient(W*.25,0,W*.75,0);gTitle.addColorStop(0,'#34d399');gTitle.addColorStop(.5,'#14b8a6');gTitle.addColorStop(1,'#84cc16');
-  ctx.fillStyle=gTitle;ctx.fillText('CNS Pharmacology Quiz',W/2,155);
-
-
-  const gs2=ctx.createLinearGradient(W*.2,0,W*.8,0);gs2.addColorStop(0,'#10b981');gs2.addColorStop(1,'#14b8a6');
-  ctx.font='bold 72px Syne,serif';ctx.fillStyle=gs2;ctx.fillText(lastEntry.score,W/2,350);
-  ctx.font='14px DM Sans,sans-serif';ctx.fillStyle='#64748b';ctx.fillText('TOTAL SCORE',W/2,375);
-  ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(60,395);ctx.lineTo(W-60,395);ctx.stroke();
+  const gTitle=ctx.createLinearGradient(W*.25,0,W*.75,0);gTitle.addColorStop(0,'#c084fc');gTitle.addColorStop(.5,'#a855f7');gTitle.addColorStop(1,'#ec4899');
+  ctx.fillStyle=gTitle;ctx.fillText('NSS Quiz',W/2,155);
+  ctx.font='11px Share Tech Mono,monospace';ctx.fillStyle='#6b5680';ctx.fillText('NERVOUS SYSTEM SCIENCE',W/2,175);
+  const gs2=ctx.createLinearGradient(W*.2,0,W*.8,0);gs2.addColorStop(0,'#a855f7');gs2.addColorStop(1,'#ec4899');
+  ctx.font='bold 72px Syne,serif';ctx.fillStyle=gs2;ctx.fillText(lastEntry.score,W/2,280);
+  ctx.font='14px DM Sans,sans-serif';ctx.fillStyle='#6b5680';ctx.fillText('TOTAL SCORE',W/2,305);
+  ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(60,325);ctx.lineTo(W-60,325);ctx.stroke();
   const total=lastEntry.total||TOTAL_Q;
-  [['✅',`${lastEntry.mark}/${total}`,'Correct'],['🎯',`${lastEntry.acc}%`,'Accuracy'],['🔥',`${lastEntry.bestStreak}`,'Best Streak'],['💀',`${lastEntry.bossCorrect||0}/2`,'Boss Qs']].forEach((st,i)=>{
-    const col=i%2===0?W*.25:W*.75;const row=i<2?430:490;
+  [['✅',`${lastEntry.mark}/${total}`,'Correct'],['🎯',`${lastEntry.acc}%`,'Accuracy'],['🔥',`${lastEntry.bestStreak}`,'Best Streak'],['💀',`${lastEntry.bossCorrect||0}/3`,'Boss Qs']].forEach((st,i)=>{
+    const col=i%2===0?W*.25:W*.75;const row=i<2?375:435;
     ctx.font='20px serif';ctx.fillText(st[0],col,row-16);
     ctx.font='bold 22px Syne,serif';ctx.fillStyle='#e2e8f0';ctx.fillText(st[1],col,row+6);
-    ctx.font='11px DM Sans,sans-serif';ctx.fillStyle='#64748b';ctx.fillText(st[2],col,row+22);
+    ctx.font='11px DM Sans,sans-serif';ctx.fillStyle='#6b5680';ctx.fillText(st[2],col,row+22);
   });
-  ctx.font='bold 16px DM Sans,sans-serif';ctx.fillStyle='#e2e8f0';ctx.fillText(lastEntry.name,W/2,560);
-  ctx.font='12px DM Sans,sans-serif';ctx.fillStyle='#475569';ctx.fillText(`${lastEntry.date} · ${lastEntry.timeStr||lastEntry.time+'s'}`,W/2,580);
-  ctx.strokeStyle='rgba(16,185,129,.3)';ctx.lineWidth=1.5;ctx.roundRect(.75,.75,W-1.5,H-1.5,24);ctx.stroke();
+  ctx.font='bold 16px DM Sans,sans-serif';ctx.fillStyle='#e2e8f0';ctx.fillText(lastEntry.name,W/2,500);
+  ctx.font='12px DM Sans,sans-serif';ctx.fillStyle='#475569';ctx.fillText(`${lastEntry.date} · ${lastEntry.timeStr||lastEntry.time+'s'}`,W/2,520);
+  ctx.strokeStyle='rgba(168,85,247,.3)';ctx.lineWidth=1.5;ctx.roundRect(.75,.75,W-1.5,H-1.5,24);ctx.stroke();
 }
 function downloadShare(){
-  const a=document.createElement('a');a.download='pharma-quiz-score.png';a.href=document.getElementById('shareCanvas').toDataURL('image/png');a.click();
+  const a=document.createElement('a');a.download='nss-quiz-score.png';a.href=document.getElementById('shareCanvas').toDataURL('image/png');a.click();
 }
 
-/* ═══════════ INIT ═══════════ */
+/* ═══════════ WRONG REVIEW ═══════════ */
+function showWrongReview(){
+  const ov=document.getElementById('reviewOverlay');
+  const cont=document.getElementById('reviewContent');
+  if(!gs.wrongAnswers||gs.wrongAnswers.length===0){cont.innerHTML='<div style="text-align:center;color:var(--muted2);padding:40px;font-family:Share Tech Mono,monospace">No wrong answers — perfect score! 🏆</div>';ov.style.display='block';return;}
+  let html='';
+  gs.wrongAnswers.forEach((w,i)=>{
+    html+=`<div style="background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.2);border-radius:10px;padding:16px;margin-bottom:14px">
+      <div style="font-size:.65rem;color:var(--muted2);font-family:'Share Tech Mono',monospace;margin-bottom:6px">Q${i+1} · ${w.s||''} ${w.chosen===-1?'<span style=color:#f59e0b>⏰ Time ran out</span>':''}</div>
+      <div style="font-size:.92rem;color:#f3e8ff;margin-bottom:12px;padding-left:10px;border-left:2px solid rgba(239,68,68,.4);line-height:1.6">${esc(w.q)}</div>
+      <div style="display:flex;flex-direction:column;gap:6px">`;
+    w.options.forEach((opt,j)=>{
+      const isCorrect=j===w.correct;
+      const isChosen=j===w.chosen;
+      let bg='rgba(255,255,255,.03)';let border='rgba(255,255,255,.08)';let color='#94a3b8';let prefix='▸';
+      if(isCorrect){bg='rgba(168,85,247,.12)';border='rgba(168,85,247,.4)';color='#d8b4fe';prefix='✓';}
+      else if(isChosen){bg='rgba(239,68,68,.1)';border='rgba(239,68,68,.35)';color='#fca5a5';prefix='✗';}
+      html+=`<div style="padding:8px 12px;border-radius:6px;border:1px solid ${border};background:${bg};color:${color};font-size:.84rem;display:flex;gap:8px;align-items:center"><span>${prefix}</span><span>${esc(opt)}</span></div>`;
+    });
+    html+='</div></div>';
+  });
+  cont.innerHTML=html;
+  ov.style.display='block';
+}
+function closeWrongReview(){document.getElementById('reviewOverlay').style.display='none';}
+
 initParticles();
 if(!CanvasRenderingContext2D.prototype.roundRect){
   CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){
@@ -776,7 +938,7 @@ if(!CanvasRenderingContext2D.prototype.roundRect){
     this.quadraticCurveTo(x,y+h,x,y+h-r);this.lineTo(x,y+r);this.quadraticCurveTo(x,y,x+r,y);this.closePath();
   };
 }
-</script
+</script>
 
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
@@ -793,17 +955,24 @@ if(!CanvasRenderingContext2D.prototype.roundRect){
       appId:"1:856699374879:web:ca90ecc9527349fd68f42a"
     };
     firebase.initializeApp(cfg);
-    window._scoresRef=firebase.database().ref('scores');
+    window._scoresRef=firebase.database().ref('nss_scores');
     window._fbReady=true;
-    console.log('🔥 Firebase connected — Somaya Pharma Quiz');
+    console.log('🔥 Firebase connected — NSS Quiz');
   }catch(e){
     window._fbReady=false;
     console.warn('Firebase init failed:',e);
   }
 })();
 </script>
-</body>
-</html>
 
+<div id="reviewOverlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:800;overflow-y:auto;padding:24px 16px">
+  <div style="max-width:680px;margin:0 auto">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div style="font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;color:#f3e8ff">📋 Wrong Answers Review</div>
+      <button onclick="closeWrongReview()" style="padding:8px 16px;border-radius:6px;border:1px solid rgba(168,85,247,.3);background:rgba(168,85,247,.08);color:var(--purple);font-family:'Share Tech Mono',monospace;font-size:.78rem;cursor:pointer">✕ Close</button>
+    </div>
+    <div id="reviewContent"></div>
+  </div>
+</div>
 </body>
 </html>
