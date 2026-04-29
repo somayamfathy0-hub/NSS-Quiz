@@ -247,7 +247,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="features-grid">
     <div class="feat-item"><span class="feat-icon">❓</span><div><div class="feat-val">41 Qs</div><div class="feat-lbl">Questions</div></div></div>
     <div class="feat-item"><span class="feat-icon">❤️</span><div><div class="feat-val">10 Lives</div><div class="feat-lbl">Per game</div></div></div>
-    <div class="feat-item"><span class="feat-icon">⏱️</span><div><div class="feat-val">20s / 30s</div><div class="feat-lbl">Normal / Boss</div></div></div>
+    <div class="feat-item"><span class="feat-icon">⏱️</span><div><div class="feat-val">20s / 35s</div><div class="feat-lbl">Normal / Boss</div></div></div>
     <div class="feat-item"><span class="feat-icon">⚡</span><div><div class="feat-val">×4 Combo</div><div class="feat-lbl">Streak bonus</div></div></div>
     <div class="feat-item"><span class="feat-icon">💀</span><div><div class="feat-val">Boss Qs</div><div class="feat-lbl">3 boss questions</div></div></div>
     <div class="feat-item"><span class="feat-icon">🏆</span><div><div class="feat-val">Ranks</div><div class="feat-lbl">Earn your title</div></div></div>
@@ -571,13 +571,13 @@ function loadQuestion(){
 function showBossAlert(cb){
   playSound('boss_music');
   const ov=document.createElement('div');ov.className='boss-overlay';
-  ov.innerHTML=`<div class="boss-skull">💀</div><div class="boss-title">BOSS QUESTION</div><div class="boss-sub">+250 pts · 30 seconds · No mercy</div>`;
+  ov.innerHTML=`<div class="boss-skull">💀</div><div class="boss-title">BOSS QUESTION</div><div class="boss-sub">+250 pts · 35 seconds · No mercy</div>`;
   document.getElementById('gameScreen').appendChild(ov);
   setTimeout(()=>{ov.remove();cb();},2200);
 }
 
 function actuallyLoadQuestion(q,isBoss){
-  const maxTime=isBoss?30:20;
+  const maxTime=isBoss?35:20;
   gs.maxTime=maxTime;
   gs.timeLeft=maxTime;
   document.getElementById('qLabel').textContent=`Q ${gs.current+1} of ${gs.questions.length}`;
