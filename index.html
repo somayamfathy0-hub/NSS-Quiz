@@ -247,7 +247,7 @@ body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
   <div class="features-grid">
     <div class="feat-item"><span class="feat-icon">❓</span><div><div class="feat-val">41 Qs</div><div class="feat-lbl">Questions</div></div></div>
     <div class="feat-item"><span class="feat-icon">❤️</span><div><div class="feat-val">10 Lives</div><div class="feat-lbl">Per game</div></div></div>
-    <div class="feat-item"><span class="feat-icon">⏱️</span><div><div class="feat-val">20s / 35s</div><div class="feat-lbl">Normal / Boss</div></div></div>
+    <div class="feat-item"><span class="feat-icon">⏱️</span><div><div class="feat-val">22s / 35s</div><div class="feat-lbl">Normal / Boss</div></div></div>
     <div class="feat-item"><span class="feat-icon">⚡</span><div><div class="feat-val">×4 Combo</div><div class="feat-lbl">Streak bonus</div></div></div>
     <div class="feat-item"><span class="feat-icon">💀</span><div><div class="feat-val">Boss Qs</div><div class="feat-lbl">3 boss questions</div></div></div>
     <div class="feat-item"><span class="feat-icon">🏆</span><div><div class="feat-val">Ranks</div><div class="feat-lbl">Earn your title</div></div></div>
@@ -387,7 +387,7 @@ const NORMAL_Q=[
   {q:"Which anti-epileptic drug is famously associated with adverse effects such as gingival hyperplasia, hirsutism, and teratogenic effects like 'fetal hydantoin syndrome'?",o:["Phenytoin","Valproic acid","Ethosuximide","Gabapentin"],a:0,t:"mcq",s:"Pharmacology"},
   {q:"Among the antipsychotic drugs, which agent is reserved for treatment-resistant schizophrenia due to its risk of causing life-threatening agranulocytosis?",o:["Haloperidol","Risperidone","Clozapine","Aripiprazole"],a:2,t:"mcq",s:"Pharmacology"},
   {q:"Which statement best describes the unique pharmacological profile of Aripiprazole?",o:["It is a high-potency D2 receptor antagonist.","It is an irreversible MAO inhibitor.","It acts as a partial D2 receptor agonist, serving as a dopamine 'stabilizer'.","It is primarily used to treat neuropathic pain."],a:2,t:"mcq",s:"Pharmacology"},
-  {q:"A patient treated with a Monoamine Oxidase Inhibitor (MAOI) eats a meal rich in tyramine and develops a severe hypertensive crisis. This is known as:",o:["Serotonin Syndrome","The Cheese Reaction","Neuroleptic Malignant Syndrome","Grey Baby Syndrome"],a:1,t:"mcq",s:"Pharmacology"},
+  {q:"Which of the following anti-epileptic drugs is considered the drug of choice for the treatment of Trigeminal Neuralgia?",o:["Phenytoin","Carbamazepine","Ethosuximide","Sodium Valproate"],a:1,t:"mcq",s:"Pharmacology"},
   {q:"Which antidepressant is particularly useful for patients who wish to quit smoking and has the clinical advantage of not causing sexual dysfunction?",o:["Fluoxetine","Bupropion","Amitriptyline","Venlafaxine"],a:1,t:"mcq",s:"Pharmacology"},
   {q:"When differentiating between Serotonin Syndrome and Neuroleptic Malignant Syndrome (NMS) in a clinical setting, which physical exam finding is most specific to Serotonin Syndrome?",o:["Hyperthermia","Autonomic instability","Lead-pipe muscle rigidity","Clonus and hyperreflexia"],a:3,t:"mcq",s:"Pharmacology"},
 
@@ -400,7 +400,7 @@ const NORMAL_Q=[
   {q:"During the microscopic examination of brain tissue from a patient who died of Rabies, the presence of specific intracytoplasmic acidophilic bodies is noted, particularly in the hippocampus and cerebellum. These structures are known as:",o:["Rosenthal fibers","Corpora amylacia","Negri bodies","Owl's eye inclusions"],a:2,t:"mcq",s:"Pathology"},
 
   // ── HISTOLOGY (2) ──
-  {q:"The cerebellar cortex is organized into three distinct layers. Which of the following is the central layer?",o:["Outer molecular layer","Inner granule layer","Ganglionic layer","Multiform layer"],a:2,t:"mcq",s:"Histology"},
+  {q:"The pia mater and the arachnoid mater together form a compound membrane specifically known as:",o:["Dura mater","Pachymeninx","Leptomeninges","Subarachnoid space"],a:2,t:"mcq",s:"Histology"},
   {q:"Which layer of the cerebral cortex is identified as being the narrowest layer?",o:["Molecular layer (I)","External pyramidal layer (III)","Internal granular layer (IV)","Multiform layer (VI)"],a:2,t:"mcq",s:"Histology"},
 ];
 
@@ -577,7 +577,7 @@ function showBossAlert(cb){
 }
 
 function actuallyLoadQuestion(q,isBoss){
-  const maxTime=isBoss?35:20;
+  const maxTime=isBoss?35:22;
   gs.maxTime=maxTime;
   gs.timeLeft=maxTime;
   document.getElementById('qLabel').textContent=`Q ${gs.current+1} of ${gs.questions.length}`;
